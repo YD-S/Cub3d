@@ -51,11 +51,16 @@ typedef struct s_mlx_data
 t_map_data		parse_map(char *map);
 void			open_map(t_mlx_data mlx_data);
 t_mlx_data		init_mlx_data(char *map_name);
+t_player		init_player(t_mlx_data mlx_data);
 void			hook(struct mlx_key_data keydata, void *param);
 void			put_player(t_mlx_data mlx_data);
 void			paint_image_black(t_mlx_data mlx_data);
 void			paint_map(t_mlx_data mlx_data);
 void			paint_horizontal_lines(t_mlx_data mlx_data);
 void			paint_vertical_lines(t_mlx_data mlx_data);
+void			put_ray(t_mlx_data mlx_data);
+float			grade_to_radian(float grade);
+t_point			get_player_position(t_mlx_data mlx_data);
+float			get_player_angle(t_mlx_data mlx_data);
 
 #endif // CUB3D_H

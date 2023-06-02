@@ -1,18 +1,11 @@
 
 #include "cub3d.h"
 
-t_mlx_data	init_mlx_data(char *map_name)
-{
-	t_mlx_data	mlx_data;
-
-	mlx_data.map_data = parse_map(map_name);
-	return (mlx_data);
-}
-
 int	get_rgba(int r, int g, int b, int a)
 {
 	return (r << 24 | g << 16 | b << 8 | a);
 }
+
 int	ft_sign(int x0, int x1)
 {
 	if (x0 < x1)
@@ -28,8 +21,8 @@ void	draw_lines(t_point point0, t_point point1, mlx_image_t *img)
 	int	err;
 	int	e2;
 
-	dx = abs(point1.xcoord - point0.xcoord);
-	dy = -abs(point1.ycoord - point0.ycoord);
+	dx = fabsf(point1.xcoord - point0.xcoord);
+	dy = -fabsf(point1.ycoord - point0.ycoord);
 	err = dx + dy;
 	while (1 == 1)
 	{
@@ -214,9 +207,8 @@ float	grade_to_radian(float grade)
 
 float	get_player_angle(t_mlx_data mlx_data)
 {
-	int		x;
-	int		y;
-	t_point	pos;
+	int	x;
+	int	y;
 
 	x = 0;
 	while (x < mlx_data.map_data.heigh)
@@ -224,29 +216,18 @@ float	get_player_angle(t_mlx_data mlx_data)
 		y = 0;
 		while (y < mlx_data.map_data.width)
 		{
-			if (mlx_data.map_data.map[x][y].value == 'N')
+			if (mlx_data.map_data.map[x][y].value == 'S')
 				return (grade_to_radian(0));
-			else if ((mlx_data.map_data.map[x][y].value == 'S'))
+			else if (mlx_data.map_data.map[x][y].value == 'E')
 				return (grade_to_radian(90));
-			else if ((mlx_data.map_data.map[x][y].value == 'E'))
+			else if (mlx_data.map_data.map[x][y].value == 'N')
 				return (grade_to_radian(180));
-			else if ((mlx_data.map_data.map[x][y].value == 'W'))
+			else if (mlx_data.map_data.map[x][y].value == 'W')
 				return (grade_to_radian(270));
 			y++;
 		}
 		x++;
 	}
-}
-
-t_player	init_player(t_mlx_data mlx_data)
-{
-	t_player	player;
-	t_point		pos;
-
-	player.position.xcoord = get_player_position(mlx_data).xcoord * PIXEL_SIZE + PIXEL_SIZE / 2;
-	player.position.ycoord = get_player_position(mlx_data).ycoord * PIXEL_SIZE + PIXEL_SIZE / 2;
-	player.angle = get_player_angle(mlx_data);
-	return (player);
 }
 
 void	put_player(t_mlx_data mlx_data)
@@ -263,9 +244,15 @@ void	put_player(t_mlx_data mlx_data)
 		y = 0;
 		while (y <= PIXEL_SIZE)
 		{
-			if (pow(((mlx_data.player.position.xcoord - PIXEL_SIZE / 2 + x) - (mlx_data.player.position.xcoord)),2) + pow(((mlx_data.player.position.ycoord - PIXEL_SIZE / 2 + y) - (mlx_data.player.position.ycoord)),2) <= pow(radius, 2))
+			if (pow(((mlx_data.player.position.xcoord - PIXEL_SIZE / 2 + x)
+						- (mlx_data.player.position.xcoord)), 2)
+				+ pow(((mlx_data.player.position.ycoord - PIXEL_SIZE / 2 + y)
+						- (mlx_data.player.position.ycoord)), 2) <= pow(radius,
+																																																									2))
 			{
-				mlx_put_pixel(mlx_data.img, mlx_data.player.position.xcoord - PIXEL_SIZE / 2 + x, mlx_data.player.position.ycoord - PIXEL_SIZE / 2 + y, get_rgba(255, 0, 0, 255));
+				mlx_put_pixel(mlx_data.img, mlx_data.player.position.xcoord
+						- PIXEL_SIZE / 2 + x, mlx_data.player.position.ycoord
+						- PIXEL_SIZE / 2 + y, get_rgba(255, 0, 0, 255));
 			}
 			y++;
 		}
@@ -285,15 +272,17 @@ void	put_player(t_mlx_data mlx_data)
 // {
 // 	t_point angle_point;
 
-// 	angle_point.xcoord = 
+// 	angle_point.xcoord =
 // }
 
 void	put_ray(t_mlx_data mlx_data)
 {
 	t_point	point1;
 
-	point1.xcoord = mlx_data.player.position.xcoord + ((mlx_data.player.position.xcoord) * cos(mlx_data.player.angle));
-	point1.ycoord = mlx_data.player.position.ycoord + ((mlx_data.player.position.ycoord) * sin(mlx_data.player.angle));
+	point1.xcoord = roundf(mlx_data.player.position.xcoord + 50
+			* sin(mlx_data.player.angle));
+	point1.ycoord = roundf(mlx_data.player.position.ycoord + 50
+			* cos(mlx_data.player.angle));
 	draw_lines(mlx_data.player.position, point1, mlx_data.img);
 }
 
@@ -309,6 +298,6 @@ void	open_map(t_mlx_data mlx_data)
 	mlx_data.player = init_player(mlx_data);
 	put_player(mlx_data);
 	put_ray(mlx_data);
-	mlx_key_hook(mlx_data.mlx, &hook,(void*)&mlx_data);
+	mlx_key_hook(mlx_data.mlx, &hook, (void *)&mlx_data);
 	mlx_loop(mlx_data.mlx);
 }

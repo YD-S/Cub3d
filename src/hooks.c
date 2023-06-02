@@ -1,14 +1,27 @@
 
 #include "cub3d.h"
 
-void repaint_map(t_mlx_data *mlx_data)
+void	repaint_map(t_mlx_data *mlx_data)
 {
-    paint_image_black(*mlx_data);
+	paint_image_black(*mlx_data);
 	paint_map(*mlx_data);
 	paint_horizontal_lines(*mlx_data);
 	paint_vertical_lines(*mlx_data);
 	put_player(*mlx_data);
-    ft_printf("HOLAAAA");
+	put_ray(*mlx_data);
+}
+
+void	call_movement_hooks(t_mlx_data *mlx_data, struct mlx_key_data keydata)
+{
+	if (keydata.key == MLX_KEY_RIGHT)
+	{
+		mlx_data->player.angle -= grade_to_radian(3.5);
+	}
+	if (keydata.key == MLX_KEY_LEFT)
+	{
+		mlx_data->player.angle += grade_to_radian(3.5);
+	}
+	repaint_map(mlx_data);
 }
 
 void	hook(struct mlx_key_data keydata, void *param)
@@ -37,5 +50,5 @@ void	hook(struct mlx_key_data keydata, void *param)
 	{
 		mlx_data->player.position.xcoord -= 5;
 	}
-	repaint_map(mlx_data);
+	call_movement_hooks(mlx_data, keydata);
 }
