@@ -15,11 +15,11 @@ void	call_movement_hooks(t_mlx_data *mlx_data, struct mlx_key_data keydata)
 {
 	if (keydata.key == MLX_KEY_RIGHT)
 	{
-		mlx_data->player.angle -= grade_to_radian(3.5);
+		mlx_data->player.angle -= grade_to_radian(5);
 	}
 	if (keydata.key == MLX_KEY_LEFT)
 	{
-		mlx_data->player.angle += grade_to_radian(3.5);
+		mlx_data->player.angle += grade_to_radian(5);
 	}
 	repaint_map(mlx_data);
 }
