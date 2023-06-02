@@ -278,12 +278,21 @@ void	put_player(t_mlx_data mlx_data)
 void	put_ray(t_mlx_data mlx_data)
 {
 	t_point	point1;
+	int		n_rays;
+	float	angle_diff;
 
+	n_rays = 0;
+	angle_diff = 0;
+	while (n_rays < 50)
+	{
 	point1.xcoord = roundf(mlx_data.player.position.xcoord + 50
-			* sin(mlx_data.player.angle));
+			* sin(mlx_data.player.angle + angle_diff));
 	point1.ycoord = roundf(mlx_data.player.position.ycoord + 50
-			* cos(mlx_data.player.angle));
+			* cos(mlx_data.player.angle+ angle_diff));
 	draw_lines(mlx_data.player.position, point1, mlx_data.img);
+	// angle_diff += 0.05;
+	n_rays++;
+	}
 }
 
 void	open_map(t_mlx_data mlx_data)

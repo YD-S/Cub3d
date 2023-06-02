@@ -1,4 +1,3 @@
-
 #include "cub3d.h"
 
 void	repaint_map(t_mlx_data *mlx_data)
@@ -36,19 +35,31 @@ void	hook(struct mlx_key_data keydata, void *param)
 	}
 	if (keydata.key == MLX_KEY_W)
 	{
-		mlx_data->player.position.ycoord -= 5;
+		mlx_data->player.position.xcoord = roundf(mlx_data->player.position.xcoord
+				+ 5 * sin(mlx_data->player.angle));
+		mlx_data->player.position.ycoord = roundf(mlx_data->player.position.ycoord
+				+ 5 * cos(mlx_data->player.angle));
 	}
 	if (keydata.key == MLX_KEY_S)
 	{
-		mlx_data->player.position.ycoord += 5;
+		mlx_data->player.position.xcoord = roundf(mlx_data->player.position.xcoord
+				- 5 * sin(mlx_data->player.angle));
+		mlx_data->player.position.ycoord = roundf(mlx_data->player.position.ycoord
+				- 5 * cos(mlx_data->player.angle));
 	}
 	if (keydata.key == MLX_KEY_D)
 	{
-		mlx_data->player.position.xcoord += 5;
+		mlx_data->player.position.xcoord = roundf(mlx_data->player.position.xcoord
+				- 5 * sin(mlx_data->player.angle + grade_to_radian(90)));
+		mlx_data->player.position.ycoord = roundf(mlx_data->player.position.ycoord
+				- 5 * cos(mlx_data->player.angle + grade_to_radian(90)));
 	}
 	if (keydata.key == MLX_KEY_A)
 	{
-		mlx_data->player.position.xcoord -= 5;
+		mlx_data->player.position.xcoord = roundf(mlx_data->player.position.xcoord
+				+ 5 * sin(mlx_data->player.angle + grade_to_radian(90)));
+		mlx_data->player.position.ycoord = roundf(mlx_data->player.position.ycoord
+				+ 5 * cos(mlx_data->player.angle + grade_to_radian(90)));
 	}
 	call_movement_hooks(mlx_data, keydata);
 }
