@@ -204,6 +204,40 @@ t_point	get_player_position(t_mlx_data mlx_data)
 	exit(0);
 }
 
+float	grade_to_radian(float grade)
+{
+	float	result;
+
+	result = grade * M_PI / 180;
+	return (result);
+}
+
+float	get_player_angle(t_mlx_data mlx_data)
+{
+	int		x;
+	int		y;
+	t_point	pos;
+
+	x = 0;
+	while (x < mlx_data.map_data.heigh)
+	{
+		y = 0;
+		while (y < mlx_data.map_data.width)
+		{
+			if (mlx_data.map_data.map[x][y].value == 'N')
+				return (grade_to_radian(0));
+			else if ((mlx_data.map_data.map[x][y].value == 'S'))
+				return (grade_to_radian(90));
+			else if ((mlx_data.map_data.map[x][y].value == 'E'))
+				return (grade_to_radian(180));
+			else if ((mlx_data.map_data.map[x][y].value == 'W'))
+				return (grade_to_radian(270));
+			y++;
+		}
+		x++;
+	}
+}
+
 t_player	init_player(t_mlx_data mlx_data)
 {
 	t_player	player;
@@ -211,6 +245,7 @@ t_player	init_player(t_mlx_data mlx_data)
 
 	player.position.xcoord = get_player_position(mlx_data).xcoord * PIXEL_SIZE + PIXEL_SIZE / 2;
 	player.position.ycoord = get_player_position(mlx_data).ycoord * PIXEL_SIZE + PIXEL_SIZE / 2;
+	player.angle = get_player_angle(mlx_data);
 	return (player);
 }
 
@@ -246,6 +281,22 @@ void	put_player(t_mlx_data mlx_data)
 	}
 }
 
+// t_point	point_to_angle(t_point point)
+// {
+// 	t_point angle_point;
+
+// 	angle_point.xcoord = 
+// }
+
+void	put_ray(t_mlx_data mlx_data)
+{
+	t_point	point1;
+
+	point1.xcoord = mlx_data.player.position.xcoord + ((mlx_data.player.position.xcoord) * cos(mlx_data.player.angle));
+	point1.ycoord = mlx_data.player.position.ycoord + ((mlx_data.player.position.ycoord) * sin(mlx_data.player.angle));
+	draw_lines(mlx_data.player.position, point1, mlx_data.img);
+}
+
 void	open_map(t_mlx_data mlx_data)
 {
 	mlx_data.mlx = mlx_init(1920, 1080, "cub3d", false);
@@ -257,6 +308,7 @@ void	open_map(t_mlx_data mlx_data)
 	paint_vertical_lines(mlx_data);
 	mlx_data.player = init_player(mlx_data);
 	put_player(mlx_data);
+	put_ray(mlx_data);
 	mlx_key_hook(mlx_data.mlx, &hook,(void*)&mlx_data);
 	mlx_loop(mlx_data.mlx);
 }
