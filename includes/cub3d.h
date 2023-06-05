@@ -36,7 +36,7 @@ typedef struct s_map_data
 typedef struct s_player
 {
 	t_point		position;
-	float		angle;
+	int			angle;
 }				t_player;
 
 typedef struct s_mlx_data
@@ -62,5 +62,7 @@ void			put_ray(t_mlx_data mlx_data);
 float			grade_to_radian(float grade);
 t_point			get_player_position(t_mlx_data mlx_data);
 float			get_player_angle(t_mlx_data mlx_data);
+void			draw_lines(t_point point0, t_point point1, mlx_image_t *img);
+int	get_rgba(int r, int g, int b, int a);
 
 #endif // CUB3D_H

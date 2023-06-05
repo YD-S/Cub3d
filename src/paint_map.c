@@ -217,13 +217,13 @@ float	get_player_angle(t_mlx_data mlx_data)
 		while (y < mlx_data.map_data.width)
 		{
 			if (mlx_data.map_data.map[x][y].value == 'S')
-				return (grade_to_radian(0));
+				return (0);
 			else if (mlx_data.map_data.map[x][y].value == 'E')
-				return (grade_to_radian(90));
+				return (90);
 			else if (mlx_data.map_data.map[x][y].value == 'N')
-				return (grade_to_radian(180));
+				return (180);
 			else if (mlx_data.map_data.map[x][y].value == 'W')
-				return (grade_to_radian(270));
+				return (270);
 			y++;
 		}
 		x++;
@@ -274,26 +274,6 @@ void	put_player(t_mlx_data mlx_data)
 
 // 	angle_point.xcoord =
 // }
-
-void	put_ray(t_mlx_data mlx_data)
-{
-	t_point	point1;
-	int		n_rays;
-	float	angle_diff;
-
-	n_rays = 0;
-	angle_diff = 0;
-	while (n_rays < 50)
-	{
-	point1.xcoord = roundf(mlx_data.player.position.xcoord + 50
-			* sin(mlx_data.player.angle + angle_diff));
-	point1.ycoord = roundf(mlx_data.player.position.ycoord + 50
-			* cos(mlx_data.player.angle+ angle_diff));
-	draw_lines(mlx_data.player.position, point1, mlx_data.img);
-	// angle_diff += 0.05;
-	n_rays++;
-	}
-}
 
 void	open_map(t_mlx_data mlx_data)
 {
