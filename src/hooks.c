@@ -12,11 +12,11 @@ void	repaint_map(t_mlx_data *mlx_data)
 
 void	call_movement_hooks(t_mlx_data *mlx_data, struct mlx_key_data keydata)
 {
-	if (keydata.key == MLX_KEY_RIGHT)
+	if (keydata.key == MLX_KEY_RIGHT || keydata.action == MLX_PRESS)
 	{
 		mlx_data->player.angle += 355;
 	}
-	if (keydata.key == MLX_KEY_LEFT)
+	if (keydata.key == MLX_KEY_LEFT || keydata.action == MLX_PRESS)
 	{
 		mlx_data->player.angle += 5;
 	}
@@ -33,33 +33,33 @@ void	hook(struct mlx_key_data keydata, void *param)
 		mlx_terminate(mlx_data->mlx);
 		exit(0);
 	}
-	if (keydata.key == MLX_KEY_W)
+	else if (keydata.key == MLX_KEY_W)
 	{
 		mlx_data->player.position.xcoord = roundf(mlx_data->player.position.xcoord
-				+ 5 * sin(grade_to_radian(mlx_data->player.angle)));
+				+ 10 * sin(grade_to_radian(mlx_data->player.angle)));
 		mlx_data->player.position.ycoord = roundf(mlx_data->player.position.ycoord
-				+ 5 * cos(grade_to_radian(mlx_data->player.angle)));
+				+ 10 * cos(grade_to_radian(mlx_data->player.angle)));
 	}
-	if (keydata.key == MLX_KEY_S)
+	else if (keydata.key == MLX_KEY_S)
 	{
 		mlx_data->player.position.xcoord = roundf(mlx_data->player.position.xcoord
-				- 5 * sin(grade_to_radian(mlx_data->player.angle)));
+				- 10 * sin(grade_to_radian(mlx_data->player.angle)));
 		mlx_data->player.position.ycoord = roundf(mlx_data->player.position.ycoord
-				- 5 * cos(grade_to_radian(mlx_data->player.angle)));
+				- 10 * cos(grade_to_radian(mlx_data->player.angle)));
 	}
-	if (keydata.key == MLX_KEY_D)
+	else if (keydata.key == MLX_KEY_D)
 	{
 		mlx_data->player.position.xcoord = roundf(mlx_data->player.position.xcoord
-				- 5 * sin(grade_to_radian(mlx_data->player.angle) + 90));
+				- 10 * sin(grade_to_radian(mlx_data->player.angle) + 90));
 		mlx_data->player.position.ycoord = roundf(mlx_data->player.position.ycoord
-				- 5 * cos(grade_to_radian(mlx_data->player.angle) + 90));
+				- 10 * cos(grade_to_radian(mlx_data->player.angle) + 90));
 	}
-	if (keydata.key == MLX_KEY_A)
+	else if (keydata.key == MLX_KEY_A)
 	{
 		mlx_data->player.position.xcoord = roundf(mlx_data->player.position.xcoord
-				+ 5 * sin(grade_to_radian(mlx_data->player.angle) + 90));
+				+ 10 * sin(grade_to_radian(mlx_data->player.angle) + 90));
 		mlx_data->player.position.ycoord = roundf(mlx_data->player.position.ycoord
-				+ 5 * cos(grade_to_radian(mlx_data->player.angle) + 90));
+				+ 10 * cos(grade_to_radian(mlx_data->player.angle) + 90));
 	}
 	call_movement_hooks(mlx_data, keydata);
 }
