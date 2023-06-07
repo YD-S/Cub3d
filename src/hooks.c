@@ -14,11 +14,11 @@ void	call_movement_hooks(t_mlx_data *mlx_data, struct mlx_key_data keydata)
 {
 	if (keydata.key == MLX_KEY_RIGHT || keydata.action == MLX_PRESS)
 	{
-		mlx_data->player.angle += 355;
+		mlx_data->player.angle += 350;
 	}
 	if (keydata.key == MLX_KEY_LEFT || keydata.action == MLX_PRESS)
 	{
-		mlx_data->player.angle += 5;
+		mlx_data->player.angle += 10;
 	}
 	repaint_map(mlx_data);
 }

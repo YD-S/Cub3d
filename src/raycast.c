@@ -6,7 +6,7 @@
 /*   By: delvira- <delvira-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 15:30:17 by delvira-          #+#    #+#             */
-/*   Updated: 2023/06/07 15:47:04 by delvira-         ###   ########.fr       */
+/*   Updated: 2023/06/07 16:20:01 by delvira-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ t_point	check_vertical_steps(t_mlx_data mlx_data)
 		yn = xn / tan(grade_to_radian(mlx_data.player.angle));
 		x = roundf(mlx_data.player.position.xcoord) + xn;
 		y = roundf(mlx_data.player.position.ycoord) + yn;
-		while ((int)(y / PIXEL_SIZE) > 0 && (int)(x / PIXEL_SIZE) > 0 && (int)(y / PIXEL_SIZE) < mlx_data.map_data.heigh && (int)(x / PIXEL_SIZE) < mlx_data.map_data.width && y > 0 && x > 0 && mlx_data.map_data.map[(int)(y / PIXEL_SIZE)][(int)(x / PIXEL_SIZE)].value == '0' && (int)(y / PIXEL_SIZE) > 0)
+		while ((int)(y / PIXEL_SIZE) > 0 && (int)(x / PIXEL_SIZE) > 0 && (int)(y / PIXEL_SIZE) < mlx_data.map_data.heigh && (int)(x / PIXEL_SIZE) < mlx_data.map_data.width && y > 0 && x > 0 && mlx_data.map_data.map[(int)(y / PIXEL_SIZE)][(int)(x / PIXEL_SIZE)].value != '1' && (int)(y / PIXEL_SIZE) > 0)
 		{
 			// printf("y: %f\n",y);
 			// ft_print_big_dot(mlx_data.img, x, y, get_rgba(255, 0, 0, 255));
@@ -144,12 +144,12 @@ t_point	check_vertical_steps(t_mlx_data mlx_data)
 t_point	check_distance(t_mlx_data mlx_data)
 {
 	t_point	hor;
-	t_point ver;
+	t_point	ver;
 	double	distancehor;
 	double	distancever;
 	t_point	return_point;
 
-	// hor = check_horizontal_steps(mlx_data);
+	hor = check_horizontal_steps(mlx_data);
 	ver = check_vertical_steps(mlx_data);
 	// if (hor.xcoord < 0 || hor.ycoord < 0)
 	// 	return(ver);
@@ -173,7 +173,7 @@ void	put_ray(t_mlx_data mlx_data)
 	point1.ycoord = roundf(mlx_data.player.position.ycoord + 50
 			* cos(grade_to_radian(mlx_data.player.angle)));
 	// ft_print_big_dot(mlx_data.img, point1.xcoord, point1.ycoord, get_rgba(255, 0, 0, 255));
-	draw_lines(mlx_data.player.position, point1, mlx_data.img);
+	// draw_lines(mlx_data.player.position, point1, mlx_data.img);
 	point1 = check_distance(mlx_data);
 	check.xcoord = (int) point1.xcoord;
 	check.ycoord = (int) point1.ycoord;
