@@ -50,16 +50,16 @@ void	hook(struct mlx_key_data keydata, void *param)
 	else if (keydata.key == MLX_KEY_D)
 	{
 		mlx_data->player.position.xcoord = roundf(mlx_data->player.position.xcoord
-				- 10 * sin(grade_to_radian(mlx_data->player.angle) + 90));
+				- 10 * sin(grade_to_radian(mlx_data->player.angle + 90)));
 		mlx_data->player.position.ycoord = roundf(mlx_data->player.position.ycoord
-				- 10 * cos(grade_to_radian(mlx_data->player.angle) + 90));
+				- 10 * cos(grade_to_radian(mlx_data->player.angle + 90)));
 	}
 	else if (keydata.key == MLX_KEY_A)
 	{
 		mlx_data->player.position.xcoord = roundf(mlx_data->player.position.xcoord
-				+ 10 * sin(grade_to_radian(mlx_data->player.angle) + 90));
+				+ 10 * sin(grade_to_radian(mlx_data->player.angle + 90)));
 		mlx_data->player.position.ycoord = roundf(mlx_data->player.position.ycoord
-				+ 10 * cos(grade_to_radian(mlx_data->player.angle) + 90));
+				+ 10 * cos(grade_to_radian(mlx_data->player.angle + 90)));
 	}
 	call_movement_hooks(mlx_data, keydata);
 }
