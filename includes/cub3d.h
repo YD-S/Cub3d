@@ -64,5 +64,7 @@ t_point			get_player_position(t_mlx_data mlx_data);
 float			get_player_angle(t_mlx_data mlx_data);
 void			draw_lines(t_point point0, t_point point1, mlx_image_t *img);
 int	get_rgba(int r, int g, int b, int a);
-
+int master_validate(t_mlx_data mlx_data);
+int		check_first_line(t_map **map, int i, int j);
+int		check_last_line(t_map **map, int i, int j);
 #endif // CUB3D_H
