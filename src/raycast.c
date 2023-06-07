@@ -6,7 +6,7 @@
 /*   By: delvira- <delvira-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 15:30:17 by delvira-          #+#    #+#             */
-/*   Updated: 2023/06/06 22:21:33 by delvira-         ###   ########.fr       */
+/*   Updated: 2023/06/07 15:47:04 by delvira-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ t_point    check_horizontal_steps(t_mlx_data mlx_data)
 		// ft_print_big_dot(mlx_data.img, roundf(mlx_data.player.position.xcoord) - xn, roundf(mlx_data.player.position.ycoord) - yn, get_rgba(255, 0, 0, 255));
 		x = roundf(mlx_data.player.position.xcoord) - xn;
 		y = roundf(mlx_data.player.position.ycoord) - yn;
-		while (mlx_data.map_data.map[(int)(y / PIXEL_SIZE) - 1][(int)(x / PIXEL_SIZE)].value != '1' && ((int)(y / PIXEL_SIZE) < mlx_data.map_data.heigh - 1 && (int)(x / PIXEL_SIZE) < mlx_data.map_data.width - 1 && (int)(y / PIXEL_SIZE) - 1 > 0 && (int)(x / PIXEL_SIZE) - 1 > 0))
+		while (((int)(y / PIXEL_SIZE) < mlx_data.map_data.heigh - 1 && (int)(x / PIXEL_SIZE) < mlx_data.map_data.width - 1 && (int)(y / PIXEL_SIZE) - 1 > 0 && (int)(x / PIXEL_SIZE) - 1 > 0) && mlx_data.map_data.map[(int)(y / PIXEL_SIZE) - 1][(int)(x / PIXEL_SIZE)].value != '1')
 		{
 			y -= PIXEL_SIZE;
 			x -= PIXEL_SIZE * tan(grade_to_radian(mlx_data.player.angle));
@@ -77,7 +77,7 @@ t_point    check_horizontal_steps(t_mlx_data mlx_data)
 		xn = yn * (float)tan(grade_to_radian(mlx_data.player.angle));
 		x = roundf(mlx_data.player.position.xcoord + xn);
 		y = roundf(mlx_data.player.position.ycoord + yn);
-		while (mlx_data.map_data.map[(int)(y / PIXEL_SIZE)][(int)(x / PIXEL_SIZE)].value != '1' && ((int)(y / PIXEL_SIZE) < mlx_data.map_data.heigh - 1 && (int)(x / PIXEL_SIZE) < mlx_data.map_data.width - 1 && (int)(y / PIXEL_SIZE) - 1 > 0 && (int)(x / PIXEL_SIZE) - 1 > 0))
+		while (((int)(y / PIXEL_SIZE) < mlx_data.map_data.heigh - 1 && (int)(x / PIXEL_SIZE) < mlx_data.map_data.width - 1 && (int)(y / PIXEL_SIZE) - 1 > 0 && (int)(x / PIXEL_SIZE) - 1 > 0) && mlx_data.map_data.map[(int)(y / PIXEL_SIZE)][(int)(x / PIXEL_SIZE)].value != '1')
 		{
 			y += PIXEL_SIZE;
 			x += PIXEL_SIZE * tan(grade_to_radian(mlx_data.player.angle));
@@ -149,7 +149,7 @@ t_point	check_distance(t_mlx_data mlx_data)
 	double	distancever;
 	t_point	return_point;
 
-	hor = check_horizontal_steps(mlx_data);
+	// hor = check_horizontal_steps(mlx_data);
 	ver = check_vertical_steps(mlx_data);
 	// if (hor.xcoord < 0 || hor.ycoord < 0)
 	// 	return(ver);
