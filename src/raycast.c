@@ -6,7 +6,7 @@
 /*   By: delvira- <delvira-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 15:30:17 by delvira-          #+#    #+#             */
-/*   Updated: 2023/06/07 16:20:01 by delvira-         ###   ########.fr       */
+/*   Updated: 2023/06/07 19:08:20 by delvira-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	radian_to_angle(float radian)
 	return (angle);
 }
 
-t_point    check_horizontal_steps(t_mlx_data mlx_data)
+t_point    check_horizontal_steps(t_mlx_data mlx_data, float angle)
 {
 	float	yn;
 	float	xn;
@@ -57,40 +57,36 @@ t_point    check_horizontal_steps(t_mlx_data mlx_data)
 	xn = 0;
 	yn = 0;
 
-	if (abs(mlx_data.player.angle % 360) < 270 && abs((mlx_data.player.angle % 360) > 90))
+	if (abs(mlx_data.player.angle % 360) <= 270 && abs((mlx_data.player.angle % 360) >= 90))
 	{
 		yn = mlx_data.player.position.ycoord - ((int)(mlx_data.player.position.ycoord / PIXEL_SIZE) *PIXEL_SIZE);
-		xn = yn * (float)tan(grade_to_radian(mlx_data.player.angle));
-		// ft_print_big_dot(mlx_data.img, roundf(mlx_data.player.position.xcoord) - xn, roundf(mlx_data.player.position.ycoord) - yn, get_rgba(255, 0, 0, 255));
+		xn = yn * (float)tan(grade_to_radian(mlx_data.player.angle + angle));
 		x = roundf(mlx_data.player.position.xcoord) - xn;
 		y = roundf(mlx_data.player.position.ycoord) - yn;
-		while (((int)(y / PIXEL_SIZE) < mlx_data.map_data.heigh - 1 && (int)(x / PIXEL_SIZE) < mlx_data.map_data.width - 1 && (int)(y / PIXEL_SIZE) - 1 > 0 && (int)(x / PIXEL_SIZE) - 1 > 0) && mlx_data.map_data.map[(int)(y / PIXEL_SIZE) - 1][(int)(x / PIXEL_SIZE)].value != '1')
+		while (((int)(y / PIXEL_SIZE) < mlx_data.map_data.heigh - 1 && (int)(x / PIXEL_SIZE) < mlx_data.map_data.width - 1 && (int)(y / PIXEL_SIZE) - 1 >= 0 && (int)(x / PIXEL_SIZE) - 1 >= 0) && mlx_data.map_data.map[(int)(y / PIXEL_SIZE) - 1][(int)(x / PIXEL_SIZE)].value != '1')
 		{
 			y -= PIXEL_SIZE;
-			x -= PIXEL_SIZE * tan(grade_to_radian(mlx_data.player.angle));
-			// ft_print_big_dot(mlx_data.img, x, y, get_rgba(255, 0, 0, 255));
+			x -= PIXEL_SIZE * tan(grade_to_radian(mlx_data.player.angle + angle));
 		}
 	}
-	else if ((mlx_data.player.angle % 360) > 270 || (mlx_data.player.angle % 360) < 90)
+	else if ((mlx_data.player.angle % 360) >= 270 || (mlx_data.player.angle % 360) <= 90)
 	{
 		yn = PIXEL_SIZE - (mlx_data.player.position.ycoord - ((int)(mlx_data.player.position.ycoord / PIXEL_SIZE) * PIXEL_SIZE));
-		xn = yn * (float)tan(grade_to_radian(mlx_data.player.angle));
+		xn = yn * (float)tan(grade_to_radian(mlx_data.player.angle + angle));
 		x = roundf(mlx_data.player.position.xcoord + xn);
 		y = roundf(mlx_data.player.position.ycoord + yn);
-		while (((int)(y / PIXEL_SIZE) < mlx_data.map_data.heigh - 1 && (int)(x / PIXEL_SIZE) < mlx_data.map_data.width - 1 && (int)(y / PIXEL_SIZE) - 1 > 0 && (int)(x / PIXEL_SIZE) - 1 > 0) && mlx_data.map_data.map[(int)(y / PIXEL_SIZE)][(int)(x / PIXEL_SIZE)].value != '1')
+		while (((int)(y / PIXEL_SIZE) < mlx_data.map_data.heigh - 1 && (int)(x / PIXEL_SIZE) < mlx_data.map_data.width - 1 && (int)(y / PIXEL_SIZE) - 1 >= 0 && (int)(x / PIXEL_SIZE) - 1 >= 0) && mlx_data.map_data.map[(int)(y / PIXEL_SIZE)][(int)(x / PIXEL_SIZE)].value != '1')
 		{
 			y += PIXEL_SIZE;
-			x += PIXEL_SIZE * tan(grade_to_radian(mlx_data.player.angle));
-			// ft_print_big_dot(mlx_data.img, x, y, get_rgba(255, 0, 0, 255));
+			x += PIXEL_SIZE * tan(grade_to_radian(mlx_data.player.angle + angle));
 		}
 	}
 	p1.xcoord = x;
 	p1.ycoord = y;
-	// ft_print_big_dot(mlx_data.img, x, y, get_rgba(255, 255, 0, 255));
 	return (p1);
 }
 
-t_point	check_vertical_steps(t_mlx_data mlx_data)
+t_point	check_vertical_steps(t_mlx_data mlx_data, float angle)
 {
 	float	xn;
 	float	yn;
@@ -102,10 +98,10 @@ t_point	check_vertical_steps(t_mlx_data mlx_data)
 	yn = 0;
 	x = 0;
 	y = 0;
-	if (abs(((mlx_data.player.angle) % 360) < 180) && abs(((mlx_data.player.angle) % 360) > 0))
+	if (abs(((mlx_data.player.angle) % 360) <= 180) && abs(((mlx_data.player.angle) % 360) >= 0))
 	{
 		xn = PIXEL_SIZE - (mlx_data.player.position.xcoord - ((int)(mlx_data.player.position.xcoord / PIXEL_SIZE) *PIXEL_SIZE));
-		yn = xn / tan(grade_to_radian(mlx_data.player.angle));
+		yn = xn / tan(grade_to_radian(mlx_data.player.angle + angle));
 		x = roundf(mlx_data.player.position.xcoord) + xn;
 		y = roundf(mlx_data.player.position.ycoord) + yn;
 		while ((int)(y / PIXEL_SIZE) > 0 && (int)(x / PIXEL_SIZE) > 0 && (int)(y / PIXEL_SIZE) < mlx_data.map_data.heigh && (int)(x / PIXEL_SIZE) < mlx_data.map_data.width && y > 0 && x > 0 && mlx_data.map_data.map[(int)(y / PIXEL_SIZE)][(int)(x / PIXEL_SIZE)].value != '1' && (int)(y / PIXEL_SIZE) > 0)
@@ -113,7 +109,7 @@ t_point	check_vertical_steps(t_mlx_data mlx_data)
 			// printf("y: %f\n",y);
 			// ft_print_big_dot(mlx_data.img, x, y, get_rgba(255, 0, 0, 255));
 			x += PIXEL_SIZE;
-			y += PIXEL_SIZE / tan(grade_to_radian(mlx_data.player.angle % 360));
+			y += PIXEL_SIZE / tan(grade_to_radian(mlx_data.player.angle + angle));
 			// printf("tan: %f\n",tan(grade_to_radian(mlx_data.player.angle)));
 			// printf("angle: %d\n",mlx_data.player.angle % 360);
 		}
@@ -121,17 +117,17 @@ t_point	check_vertical_steps(t_mlx_data mlx_data)
 		// printf("y: %f\n",y);
 		// ft_print_big_dot(mlx_data.img, x, y, get_rgba(255, 0, 0, 255));
 		}
-	else if (abs(((mlx_data.player.angle) % 360) > 180))
+	else if (abs(((mlx_data.player.angle) % 360) >= 180))
 	{
 		xn = mlx_data.player.position.xcoord - ((int)(mlx_data.player.position.xcoord / PIXEL_SIZE) *PIXEL_SIZE);
-		yn = xn / (float)tan(grade_to_radian(mlx_data.player.angle));
+		yn = xn / (float)tan(grade_to_radian(mlx_data.player.angle + angle));
 		x = mlx_data.player.position.xcoord - xn;
 		y = mlx_data.player.position.ycoord - yn;
 
 		while ((int)(y / PIXEL_SIZE) > 0 && (int)(x / PIXEL_SIZE) > 0 && (int)(y / PIXEL_SIZE) < mlx_data.map_data.heigh && (int)(x / PIXEL_SIZE) < mlx_data.map_data.width && y > 0 && x > 0 && mlx_data.map_data.map[(int)(y / PIXEL_SIZE)][(int)(x / PIXEL_SIZE) -1].value != '1' && (int)(y / PIXEL_SIZE) > 0)
 		{
 			x -= PIXEL_SIZE;
-			y -= PIXEL_SIZE / tan(grade_to_radian(mlx_data.player.angle % 360));
+			y -= PIXEL_SIZE / tan(grade_to_radian(mlx_data.player.angle + angle));
 		}
 	}
 	p1.xcoord = x;
@@ -141,7 +137,7 @@ t_point	check_vertical_steps(t_mlx_data mlx_data)
 	return(p1);
 }
 
-t_point	check_distance(t_mlx_data mlx_data)
+t_point	check_distance(t_mlx_data mlx_data, float angle)
 {
 	t_point	hor;
 	t_point	ver;
@@ -149,12 +145,12 @@ t_point	check_distance(t_mlx_data mlx_data)
 	double	distancever;
 	t_point	return_point;
 
-	hor = check_horizontal_steps(mlx_data);
-	ver = check_vertical_steps(mlx_data);
-	// if (hor.xcoord < 0 || hor.ycoord < 0)
-	// 	return(ver);
-	// if (ver.xcoord < 0 || ver.ycoord < 0)
-	// 	return(hor);
+	hor = check_horizontal_steps(mlx_data, angle);
+	ver = check_vertical_steps(mlx_data, angle);
+	if (hor.xcoord < 0 || hor.ycoord < 0)
+		return(ver);
+	if (ver.xcoord < 0 || ver.ycoord < 0)
+		return(hor);
 	distancehor = pow(abs(hor.xcoord - mlx_data.player.position.xcoord), 2) + pow(abs(hor.ycoord - mlx_data.player.position.ycoord), 2);
 	distancever = pow(abs(ver.xcoord - mlx_data.player.position.xcoord), 2) + pow(abs(ver.ycoord - mlx_data.player.position.ycoord), 2);
 	if (distancehor >= distancever)
@@ -167,6 +163,9 @@ void	put_ray(t_mlx_data mlx_data)
 {
 	t_point	point1;
 	t_point check;
+	float	angle;
+
+	angle = -15;
 
 	point1.xcoord = roundf(mlx_data.player.position.xcoord + 50
 			* sin(grade_to_radian(mlx_data.player.angle)));
@@ -174,11 +173,17 @@ void	put_ray(t_mlx_data mlx_data)
 			* cos(grade_to_radian(mlx_data.player.angle)));
 	// ft_print_big_dot(mlx_data.img, point1.xcoord, point1.ycoord, get_rgba(255, 0, 0, 255));
 	// draw_lines(mlx_data.player.position, point1, mlx_data.img);
-	point1 = check_distance(mlx_data);
+	while (angle <= 15)
+	{
+	point1 = check_distance(mlx_data, angle);
+	// check = check_horizontal_steps(mlx_data, angle);
+	// check = check_vertical_steps(mlx_data, angle);
 	check.xcoord = (int) point1.xcoord;
 	check.ycoord = (int) point1.ycoord;
-	// ft_print_big_dot(mlx_data.img, check.xcoord, check.ycoord, get_rgba(255, 0, 0, 255));
+	mlx_put_pixel(mlx_data.img, check.xcoord, check.ycoord, get_rgba(255, 0, 0, 255));
 	draw_lines(mlx_data.player.position, check, mlx_data.img);
+	angle += 0.1;
+	}
 	// check_horizontal_steps(mlx_data);
 	// check_vertical_steps(mlx_data);
 }
