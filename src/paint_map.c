@@ -21,8 +21,8 @@ void	draw_lines(t_point point0, t_point point1, mlx_image_t *img)
 	int	err;
 	int	e2;
 
-	dx = fabsf(point1.xcoord - point0.xcoord);
-	dy = -fabsf(point1.ycoord - point0.ycoord);
+	dx = labs(point1.xcoord - point0.xcoord);
+	dy = -labs(point1.ycoord - point0.ycoord);
 	err = dx + dy;
 	while (1 == 1)
 	{
@@ -228,6 +228,7 @@ float	get_player_angle(t_mlx_data mlx_data)
 		}
 		x++;
 	}
+	return (0);
 }
 
 void	put_player(t_mlx_data mlx_data)

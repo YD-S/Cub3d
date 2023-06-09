@@ -14,7 +14,6 @@ t_mlx_data	init_mlx_data(char *map_name)
 t_player	init_player(t_mlx_data mlx_data)
 {
 	t_player player;
-	t_point pos;
 
 	player.position.xcoord = get_player_position(mlx_data).xcoord * PIXEL_SIZE
 		+ PIXEL_SIZE / 2;
