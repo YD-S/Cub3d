@@ -1,6 +1,6 @@
 
 CC = gcc
-CFLAGS = -Wall -Wextra -MD -g
+CFLAGS = -Wall -Wextra -Werror -MD -g
 
 NAME = cub3d
 SRC_DIR = src

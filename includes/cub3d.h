@@ -10,8 +10,8 @@
 
 typedef struct s_point
 {
-	float		xcoord;
-	float		ycoord;
+	long int		xcoord;
+	long int		ycoord;
 }				t_point;
 
 typedef struct s_map
