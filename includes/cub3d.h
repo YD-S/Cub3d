@@ -7,6 +7,9 @@
 # include "math.h"
 
 # define PIXEL_SIZE 40
+# define SCREEN_WIDTH 1920
+# define SCREEN_HEIGH 1080
+# define RAY_DIV 0.02
 
 typedef struct s_point
 {
@@ -39,12 +42,27 @@ typedef struct s_player
 	int			angle;
 }				t_player;
 
+typedef struct s_ray
+{
+	t_point	end_point;
+	int		distance;
+	float	angle;
+}	t_ray;
+
+typedef struct s_projection_data
+{
+	int		n_rays;
+	t_ray	*ray_array;
+
+}	t_projection_data;
+
 typedef struct s_mlx_data
 {
-	mlx_t		*mlx;
-	mlx_image_t	*img;
-	t_map_data	map_data;
-	t_player	player;
+	mlx_t				*mlx;
+	mlx_image_t			*img;
+	t_map_data			map_data;
+	t_player			player;
+	t_projection_data	proj_data;
 
 }				t_mlx_data;
 
@@ -58,7 +76,7 @@ void			paint_image_black(t_mlx_data mlx_data);
 void			paint_map(t_mlx_data mlx_data);
 void			paint_horizontal_lines(t_mlx_data mlx_data);
 void			paint_vertical_lines(t_mlx_data mlx_data);
-void			put_ray(t_mlx_data mlx_data);
+t_mlx_data			put_ray(t_mlx_data mlx_data);
 float			grade_to_radian(float grade);
 t_point			get_player_position(t_mlx_data mlx_data);
 float			get_player_angle(t_mlx_data mlx_data);
@@ -67,4 +85,6 @@ int	get_rgba(int r, int g, int b, int a);
 int master_validate(t_mlx_data mlx_data);
 int		check_first_line(t_map **map, int i, int j);
 int		check_last_line(t_map **map, int i, int j);
+void	projection(t_mlx_data mlx_data);
+void	paint_square_td(t_mlx_data mlx_data, int distance, int x_start);
 #endif // CUB3D_H

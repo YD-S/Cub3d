@@ -50,10 +50,10 @@ void	paint_image_black(t_mlx_data mlx_data)
 
 	x = 0;
 	i = 0;
-	while (x < 1920)
+	while (x < SCREEN_WIDTH)
 	{
 		i = 0;
-		while (i < 1080)
+		while (i < SCREEN_HEIGH)
 		{
 			mlx_put_pixel(mlx_data.img, x, i, 0x000000FF);
 			i++;
@@ -276,9 +276,18 @@ void	put_player(t_mlx_data mlx_data)
 // 	angle_point.xcoord =
 // }
 
+t_projection_data	init_proj_data()
+{
+	t_projection_data	proj_data;
+
+	proj_data.n_rays = 30 / RAY_DIV;
+	proj_data.ray_array = ft_calloc(proj_data.n_rays + 1, sizeof(t_ray));
+	return (proj_data);
+}
+
 void	open_map(t_mlx_data mlx_data)
 {
-	mlx_data.mlx = mlx_init(1920, 1080, "cub3d", false);
+	mlx_data.mlx = mlx_init(SCREEN_WIDTH, SCREEN_HEIGH, "cub3d", false);
 	mlx_data.img = mlx_new_image(mlx_data.mlx, 1920, 1080);
 	paint_image_black(mlx_data);
 	mlx_image_to_window(mlx_data.mlx, mlx_data.img, 0, 0);
@@ -287,7 +296,9 @@ void	open_map(t_mlx_data mlx_data)
 	paint_vertical_lines(mlx_data);
 	mlx_data.player = init_player(mlx_data);
 	put_player(mlx_data);
-	put_ray(mlx_data);
+	mlx_data.proj_data = init_proj_data();
+	mlx_data = put_ray(mlx_data);
+	// projection(mlx_data);
 	mlx_key_hook(mlx_data.mlx, &hook, (void *)&mlx_data);
 	mlx_loop(mlx_data.mlx);
 }
