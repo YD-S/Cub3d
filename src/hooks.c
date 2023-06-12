@@ -34,7 +34,7 @@ void	hook(struct mlx_key_data keydata, void *param)
 		mlx_terminate(mlx_data->mlx);
 		exit(0);
 	}
-	else if (keydata.key == MLX_KEY_W)
+	else if (keydata.action == MLX_KEY_W || keydata.key == MLX_KEY_W)
 	{
 		mlx_data->player.position.xcoord = roundf(mlx_data->player.position.xcoord
 				+ 5 * sin(grade_to_radian(mlx_data->player.angle)));
