@@ -6,7 +6,7 @@
 /*   By: delvira- <delvira-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 15:30:17 by delvira-          #+#    #+#             */
-/*   Updated: 2023/06/12 21:57:05 by delvira-         ###   ########.fr       */
+/*   Updated: 2023/06/12 22:53:07 by delvira-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,7 +146,7 @@ t_point	check_vertical_steps(t_mlx_data mlx_data, float angle)
 				// ft_print_big_dot(mlx_data.img, x, y, get_rgba(255, 255, 0, 255));
 				break;
 			}
-			else if (mlx_data.map_data.map[(int)((y) / PIXEL_SIZE)][(int)((x) / PIXEL_SIZE)].value == '1')
+			else if ((int)((y) / PIXEL_SIZE) < mlx_data.map_data.heigh && (int)((x) / PIXEL_SIZE) < mlx_data.map_data.width && mlx_data.map_data.map[(int)((y) / PIXEL_SIZE)][(int)((x) / PIXEL_SIZE)].value == '1')
 			{
 				// ft_print_big_dot(mlx_data.img, x, y, get_rgba(255, 0, 0, 255));
 				// ft_print_big_dot(mlx_data.img, x, y, get_rgba(255, 0, 0, 255));
