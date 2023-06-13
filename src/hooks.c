@@ -3,12 +3,12 @@
 void	repaint_map(t_mlx_data *mlx_data)
 {
 	paint_image_black(*mlx_data);
+	projection(*mlx_data);
 	paint_map(*mlx_data);
 	paint_horizontal_lines(*mlx_data);
 	paint_vertical_lines(*mlx_data);
 	put_player(*mlx_data);
 	put_ray(*mlx_data);
-	projection(*mlx_data);
 }
 
 void	call_movement_hooks(t_mlx_data *mlx_data, struct mlx_key_data keydata)
@@ -28,8 +28,7 @@ int	collision(t_mlx_data *data, float x, float y)
 {
 	x /= PIXEL_SIZE;
 	y /= PIXEL_SIZE;
-	ft_printf("X: %f\nY: %f\n", x, y);
-	return (data->map_data.map[(int)floorf(x)][(int)floorf(y)].value == '1');
+	return (data->map_data.map[(int)floorf(y)][(int)floorf(x)].value == '1');
 }
 
 void	hook(struct mlx_key_data keydata, void *param)
@@ -74,4 +73,16 @@ void	hook(struct mlx_key_data keydata, void *param)
 		mlx_data->player.position.ycoord += vel.ycoord;
 	}
 	call_movement_hooks(mlx_data, keydata);
+}
+
+void cursor_hook(double xpos, double ypos, void* param)
+{
+	(void)ypos;
+	t_mlx_data *data = (t_mlx_data *)param;
+	mlx_set_mouse_pos(data->mlx, SCREEN_WIDTH/2, SCREEN_HEIGH/2);
+	if(xpos - SCREEN_WIDTH/2)
+		data->player.angle += 359;
+	else
+		data->player.angle += 1;
+	repaint_map(data);
 }

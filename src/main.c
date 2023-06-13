@@ -64,7 +64,6 @@ int	main(int nargs, char **args)
 	atexit(leaks);
 	mlx_data = init_mlx_data(args[1]);
 	open_map(mlx_data);
-
 	print_map(mlx_data.map_data);
 	free_map(mlx_data.map_data);
 }

@@ -6,12 +6,12 @@
 # include "libft.h"
 # include "math.h"
 
-# define SCALE 1.5
+# define SCALE 1
 
 # define PIXEL_SIZE (16 * SCALE)
 # define SCREEN_WIDTH 1920.
 # define SCREEN_HEIGH 1080.
-# define RAY_DIV 0.1
+# define RAY_DIV .2
 # define WALL_HEIGHT_SCALE (25 * SCALE)
 
 typedef struct s_point
@@ -91,4 +91,5 @@ int		check_last_line(t_map **map, int i, int j);
 void	projection(t_mlx_data mlx_data);
 void	paint_square_td(t_mlx_data mlx_data, int distance, int x_start, int color);
 void ft_put_pixel(mlx_image_t *img, uint32_t x, uint32_t y, uint32_t color);
+void cursor_hook(double xpos, double ypos, void* param);
 #endif // CUB3D_H

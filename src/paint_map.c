@@ -55,7 +55,10 @@ void	paint_image_black(t_mlx_data mlx_data)
 		i = 0;
 		while (i < SCREEN_HEIGH)
 		{
-			ft_put_pixel(mlx_data.img, x, i, 0x000000FF);
+			if(i > SCREEN_HEIGH / 2)
+				ft_put_pixel(mlx_data.img, x, i, get_rgba(34,49,63,255));
+			else
+				ft_put_pixel(mlx_data.img, x, i, get_rgba(1,1,112,255));
 			i++;
 		}
 		x++;
@@ -282,9 +285,10 @@ t_projection_data	init_proj_data()
 void	open_map(t_mlx_data mlx_data)
 {
 	mlx_data.mlx = mlx_init(SCREEN_WIDTH, SCREEN_HEIGH, "cub3d", false);
+	mlx_set_cursor_mode(mlx_data.mlx, MLX_MOUSE_HIDDEN);
 	mlx_data.img = mlx_new_image(mlx_data.mlx, 1920, 1080);
-	paint_image_black(mlx_data);
 	mlx_image_to_window(mlx_data.mlx, mlx_data.img, 0, 0);
+	paint_image_black(mlx_data);
 	paint_map(mlx_data);
 	paint_horizontal_lines(mlx_data);
 	paint_vertical_lines(mlx_data);
@@ -294,5 +298,6 @@ void	open_map(t_mlx_data mlx_data)
 	mlx_data = put_ray(mlx_data);
 	projection(mlx_data);
 	mlx_key_hook(mlx_data.mlx, &hook, (void *)&mlx_data);
+	mlx_cursor_hook(mlx_data.mlx, &cursor_hook, (void *)&mlx_data);
 	mlx_loop(mlx_data.mlx);
 }

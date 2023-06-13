@@ -255,7 +255,7 @@ void	paint_square_td(t_mlx_data mlx_data, int height, int x_start, int color)
 		y = 0;
 		while (y < height)
 		{
-			ft_put_pixel(mlx_data.img, x + x_start, (SCREEN_HEIGH / 2) - (height / 2) + y, get_rgba(color, 0, 0, 255));
+			ft_put_pixel(mlx_data.img, x + x_start, (SCREEN_HEIGH / 2) - (height / 2) + y, get_rgba(10, color, 100, 200));
 			y++;
 		}
 		x++;
