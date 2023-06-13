@@ -21,13 +21,13 @@ void	draw_lines(t_point point0, t_point point1, mlx_image_t *img)
 	int	err;
 	int	e2;
 
-	dx = labs(point1.xcoord - point0.xcoord);
-	dy = -labs(point1.ycoord - point0.ycoord);
+	dx = fabsf(point1.xcoord - point0.xcoord);
+	dy = -fabsf(point1.ycoord - point0.ycoord);
 	err = dx + dy;
-	while (1 == 1)
+	while (1)
 	{
-		mlx_put_pixel(img, point0.xcoord, point0.ycoord, 0x000000FF);
-		if (point0.xcoord == point1.xcoord && point0.ycoord == point1.ycoord)
+		ft_put_pixel(img, point0.xcoord, point0.ycoord, 0x000000FF);
+		if (fabsf(point0.xcoord - point1.xcoord) < 1 && fabsf(point0.ycoord - point1.ycoord) < 1)
 			break ;
 		e2 = 2 * err;
 		if (e2 >= dy)
@@ -55,7 +55,7 @@ void	paint_image_black(t_mlx_data mlx_data)
 		i = 0;
 		while (i < SCREEN_HEIGH)
 		{
-			mlx_put_pixel(mlx_data.img, x, i, 0x000000FF);
+			ft_put_pixel(mlx_data.img, x, i, 0x000000FF);
 			i++;
 		}
 		x++;
@@ -75,7 +75,7 @@ void	paint_square(int x_coord, int y_coord, t_mlx_data mlx_data,
 		i = 0;
 		while (i < PIXEL_SIZE)
 		{
-			mlx_put_pixel(mlx_data.img, y_coord + x, x_coord + i, color);
+			ft_put_pixel(mlx_data.img, y_coord + x, x_coord + i, color);
 			i++;
 		}
 		x++;
@@ -251,7 +251,7 @@ void	put_player(t_mlx_data mlx_data)
 						- (mlx_data.player.position.ycoord)), 2) <= pow(radius,
 																																																									2))
 			{
-				mlx_put_pixel(mlx_data.img, mlx_data.player.position.xcoord
+				ft_put_pixel(mlx_data.img, mlx_data.player.position.xcoord
 						- PIXEL_SIZE / 2 + x, mlx_data.player.position.ycoord
 						- PIXEL_SIZE / 2 + y, get_rgba(255, 0, 0, 255));
 			}
@@ -264,17 +264,11 @@ void	put_player(t_mlx_data mlx_data)
 	{
 		x = cos(a) * radius + mlx_data.player.position.xcoord;
 		y = sin(a) * radius + mlx_data.player.position.ycoord;
-		mlx_put_pixel(mlx_data.img, x, y, get_rgba(0, 0, 0, 255));
+		ft_put_pixel(mlx_data.img, x, y, get_rgba(0, 0, 0, 255));
 		a += 0.01;
 	}
 }
 
-// t_point	point_to_angle(t_point point)
-// {
-// 	t_point angle_point;
-
-// 	angle_point.xcoord =
-// }
 
 t_projection_data	init_proj_data()
 {
@@ -298,7 +292,7 @@ void	open_map(t_mlx_data mlx_data)
 	put_player(mlx_data);
 	mlx_data.proj_data = init_proj_data();
 	mlx_data = put_ray(mlx_data);
-	// projection(mlx_data);
+	projection(mlx_data);
 	mlx_key_hook(mlx_data.mlx, &hook, (void *)&mlx_data);
 	mlx_loop(mlx_data.mlx);
 }

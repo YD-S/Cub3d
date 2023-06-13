@@ -24,9 +24,18 @@ void	call_movement_hooks(t_mlx_data *mlx_data, struct mlx_key_data keydata)
 	repaint_map(mlx_data);
 }
 
+int	collision(t_mlx_data *data, float x, float y)
+{
+	x /= PIXEL_SIZE;
+	y /= PIXEL_SIZE;
+	ft_printf("X: %f\nY: %f\n", x, y);
+	return (data->map_data.map[(int)floorf(x)][(int)floorf(y)].value == '1');
+}
+
 void	hook(struct mlx_key_data keydata, void *param)
 {
 	t_mlx_data	*mlx_data;
+	t_point		vel;
 
 	mlx_data = (t_mlx_data *)param;
 	if (keydata.key == MLX_KEY_ESCAPE)
@@ -36,31 +45,33 @@ void	hook(struct mlx_key_data keydata, void *param)
 	}
 	else if (keydata.key == MLX_KEY_W)
 	{
-		mlx_data->player.position.xcoord = roundf(mlx_data->player.position.xcoord
-				+ 5 * sin(grade_to_radian(mlx_data->player.angle)));
-		mlx_data->player.position.ycoord = roundf(mlx_data->player.position.ycoord
-				+ 5 * cos(grade_to_radian(mlx_data->player.angle)));
+		vel.xcoord = roundf(5 * sin(grade_to_radian(mlx_data->player.angle)));
+		vel.ycoord = roundf(5 * cos(grade_to_radian(mlx_data->player.angle)));
 	}
 	else if (keydata.key == MLX_KEY_S)
 	{
-		mlx_data->player.position.xcoord = roundf(mlx_data->player.position.xcoord
-				- 5 * sin(grade_to_radian(mlx_data->player.angle)));
-		mlx_data->player.position.ycoord = roundf(mlx_data->player.position.ycoord
-				- 5 * cos(grade_to_radian(mlx_data->player.angle)));
+		vel.xcoord = roundf(-5 * sin(grade_to_radian(mlx_data->player.angle)));
+		vel.ycoord = roundf(-5 * cos(grade_to_radian(mlx_data->player.angle)));
 	}
 	else if (keydata.key == MLX_KEY_D)
 	{
-		mlx_data->player.position.xcoord = roundf(mlx_data->player.position.xcoord
-				- 5 * sin(grade_to_radian(mlx_data->player.angle + 90)));
-		mlx_data->player.position.ycoord = roundf(mlx_data->player.position.ycoord
-				- 5 * cos(grade_to_radian(mlx_data->player.angle + 90)));
+		vel.xcoord = roundf(-5 * sin(grade_to_radian(mlx_data->player.angle
+						+ 90)));
+		vel.ycoord = roundf(-5 * cos(grade_to_radian(mlx_data->player.angle
+						+ 90)));
 	}
 	else if (keydata.key == MLX_KEY_A)
 	{
-		mlx_data->player.position.xcoord = roundf(mlx_data->player.position.xcoord
-				+ 5 * sin(grade_to_radian(mlx_data->player.angle + 90)));
-		mlx_data->player.position.ycoord = roundf(mlx_data->player.position.ycoord
-				+ 5 * cos(grade_to_radian(mlx_data->player.angle + 90)));
+		vel.xcoord = roundf(5 * sin(grade_to_radian(mlx_data->player.angle
+						+ 90)));
+		vel.ycoord = roundf(5 * cos(grade_to_radian(mlx_data->player.angle
+						+ 90)));
+	}
+	if (!collision(mlx_data, mlx_data->player.position.xcoord + vel.xcoord,
+			mlx_data->player.position.ycoord + vel.ycoord))
+	{
+		mlx_data->player.position.xcoord += vel.xcoord;
+		mlx_data->player.position.ycoord += vel.ycoord;
 	}
 	call_movement_hooks(mlx_data, keydata);
 }
