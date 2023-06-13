@@ -8,7 +8,7 @@ void	repaint_map(t_mlx_data *mlx_data)
 	paint_vertical_lines(*mlx_data);
 	put_player(*mlx_data);
 	put_ray(*mlx_data);
-	// projection(*mlx_data);
+	projection(*mlx_data);
 }
 
 void	call_movement_hooks(t_mlx_data *mlx_data, struct mlx_key_data keydata)
@@ -34,7 +34,7 @@ void	hook(struct mlx_key_data keydata, void *param)
 		mlx_terminate(mlx_data->mlx);
 		exit(0);
 	}
-	else if (keydata.action == MLX_KEY_W || keydata.key == MLX_KEY_W)
+	else if (keydata.key == MLX_KEY_W)
 	{
 		mlx_data->player.position.xcoord = roundf(mlx_data->player.position.xcoord
 				+ 5 * sin(grade_to_radian(mlx_data->player.angle)));

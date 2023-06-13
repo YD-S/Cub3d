@@ -6,7 +6,7 @@
 /*   By: delvira- <delvira-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 15:30:17 by delvira-          #+#    #+#             */
-/*   Updated: 2023/06/12 22:53:07 by delvira-         ###   ########.fr       */
+/*   Updated: 2023/06/13 18:04:13 by delvira-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,7 +172,7 @@ t_point	check_vertical_steps(t_mlx_data mlx_data, float angle)
 				// ft_print_big_dot(mlx_data.img, x, y, get_rgba(255, 255, 0, 255));
 				break;
 			}
-			else if (mlx_data.map_data.map[(int)(y / PIXEL_SIZE)][(int)(x / PIXEL_SIZE) -1].value == '1')
+			else if ((int)((y) / PIXEL_SIZE) < mlx_data.map_data.heigh && (int)((x / PIXEL_SIZE) - 1) < mlx_data.map_data.width && mlx_data.map_data.map[(int)(y / PIXEL_SIZE)][(int)(x / PIXEL_SIZE) -1].value == '1')
 			{
 
 				break ;
@@ -242,43 +242,45 @@ t_mlx_data	put_ray(t_mlx_data mlx_data)
 	return (mlx_data);
 }
 
-// void	paint_square_td(t_mlx_data mlx_data, int distance, int x_start)
-// {
-// 	int	square_width;
-// 	int	x;
-// 	int y;
+void	paint_square_td(t_mlx_data mlx_data, int distance, int x_start)
+{
+	int	square_width;
+	int	x;
+	int y;
 
-// 	x = 0;
-// 	printf("n_rays %i", mlx_data.proj_data.n_rays);
-// 	square_width = SCREEN_WIDTH / mlx_data.proj_data.n_rays;
-// 	while (x < square_width)
-// 	{
-// 		y = (SCREEN_HEIGH / 2) - distance;
-// 		while (y < ((SCREEN_HEIGH / 2) + distance))
-// 		{
-// 			mlx_put_pixel(mlx_data.img, x + x_start, y, get_rgba(255, 0, 0, 255));
-// 			y++;
-// 		}
-// 		x++;
-// 	}
+	x = 0;
+	square_width = SCREEN_WIDTH / mlx_data.proj_data.n_rays;
+	while (x < square_width)
+	{
+		y = (SCREEN_HEIGH / 2) - (distance / 2);
+		while (y < distance)
+		{
+			mlx_put_pixel(mlx_data.img, x + x_start, y, get_rgba(distance / 2.5, 0, 0, 255));
+			y++;
+		}
+		x++;
+	}
 
-// }
+}
 
-// void	projection(t_mlx_data mlx_data)
-// {
-// 	int	i;
-// 	int	distance;
-// 	int	x_start;
+void	projection(t_mlx_data mlx_data)
+{
+	int	i;
+	// int	distance;
+	int	x_start;
+	int	ray_heigh;
+	int	y;
 
-// 	i = 0;
-// 	x_start = 0;
-// 	while (i < mlx_data.proj_data.n_rays)
-// 	{
-// 		distance = SCREEN_HEIGH - 500 - (mlx_data.proj_data.ray_array[i].distance) / SCREEN_HEIGH;
-// 		// printf("distance %i\n", distance);
-// 		paint_square_td(mlx_data, distance, x_start);
-// 		i++;
-// 		x_start += SCREEN_WIDTH / mlx_data.proj_data.n_rays;
-// 	}
-// }
+	i = 0;
+	x_start = 0;
+	while (i < mlx_data.proj_data.n_rays)
+	{
+		ray_heigh = (sqrt(mlx_data.proj_data.ray_array[i].distance));
+		y = ((SCREEN_HEIGH / 2) - (ray_heigh / 2));
+		printf("distance %i\n", y);
+		paint_square_td(mlx_data, y, x_start);
+		i++;
+		x_start += SCREEN_WIDTH / mlx_data.proj_data.n_rays;
+	}
+}
 
