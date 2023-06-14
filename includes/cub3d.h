@@ -26,8 +26,20 @@ typedef struct s_map
 	t_point		point;
 }				t_map;
 
+typedef struct s_data_count
+{
+	int		NO;
+	int		SO;
+	int		WE;
+	int		EA;
+	int		F;
+	int		C;
+	int		total;
+}				t_data_count;
+
 typedef struct s_map_data
 {
+	t_data_count count;
 	t_map		**map;
 	char		*NO;
 	char		*SO;

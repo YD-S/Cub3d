@@ -173,31 +173,43 @@ t_map_data	parse_line(char *line, t_map_data map_data)
 		if (line[i] == 'N' && line[i + 1] == 'O')
 		{
 			map_data.NO = parse_NO(line);
+			map_data.count.NO++;
+			map_data.count.total++;
 			return (map_data);
 		}
 		else if (line[i] == 'S' && line[i + 1] == 'O')
 		{
 			map_data.SO = parse_SO(line);
+			map_data.count.SO++;
+			map_data.count.total++;
 			return (map_data);
 		}
 		else if (line[i] == 'W' && line[i + 1] == 'E')
 		{
 			map_data.WE = parse_WE(line);
+			map_data.count.WE++;
+			map_data.count.total++;
 			return (map_data);
 		}
 		else if (line[i] == 'E' && line[i + 1] == 'A')
 		{
 			map_data.EA = parse_EA(line);
+			map_data.count.EA++;
+			map_data.count.total++;
 			return (map_data);
 		}
 		else if (line[i] == 'F')
 		{
 			map_data.F = parse_F(line);
+			map_data.count.F++;
+			map_data.count.total++;
 			return (map_data);
 		}
 		else if (line[i] == 'C')
 		{
 			map_data.C = parse_C(line);
+			map_data.count.C++;
+			map_data.count.total++;
 			return (map_data);
 		}
 		i++;
@@ -205,15 +217,32 @@ t_map_data	parse_line(char *line, t_map_data map_data)
 	return (map_data);
 }
 
+void count_init(t_data_count *count)
+{
+	count->total = 0;
+	count->NO = 0;
+	count->SO = 0;
+	count->WE = 0;
+	count->EA = 0;
+	count->F = 0;
+	count->C = 0;
+}
+
 t_map_data	map_data_init(void)
 {
 	t_map_data	map_data;
 
+	count_init(&map_data.count);
 	map_data.NO = NULL;
 	map_data.SO = NULL;
 	map_data.WE = NULL;
 	map_data.EA = NULL;
 	return (map_data);
+}
+
+int get_count(t_data_count count)
+{
+	return ((count.total != 6 || count.NO != 1 || count.SO != 1 || count.WE != 1 || count.EA != 1 || count.F != 1 || count.C != 1));
 }
 
 t_map_data	read_map_utils(char *map)
@@ -241,6 +270,11 @@ t_map_data	read_map_utils(char *map)
 		line = get_next_line(fd);
 	}
 	free(line);
+	if(get_count(map_data.count))
+	{
+		printf("Error\n");
+		exit(0);
+	}
 	return (map_data);
 }
 
