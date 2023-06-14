@@ -1,6 +1,6 @@
 #include "cub3d.h"
 
-void	repaint_map(void *param)
+void	*repaint_map(void *param)
 {
 	t_mlx_data *mlx_data = (t_mlx_data *)param;
 	paint_image_black(*mlx_data);
@@ -10,6 +10,8 @@ void	repaint_map(void *param)
 	paint_vertical_lines(*mlx_data);
 	put_player(*mlx_data);
 	put_ray(*mlx_data);
+
+	return (0);
 }
 
 void	call_movement_hooks(t_mlx_data *mlx_data, struct mlx_key_data keydata)

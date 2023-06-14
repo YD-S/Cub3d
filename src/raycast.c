@@ -6,7 +6,7 @@
 /*   By: delvira- <delvira-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 15:30:17 by delvira-          #+#    #+#             */
-/*   Updated: 2023/06/13 19:38:37 by delvira-         ###   ########.fr       */
+/*   Updated: 2023/06/14 17:35:04 by delvira-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ t_point    check_horizontal_steps(t_mlx_data mlx_data, float angle)
 		y = mlx_data.player.position.ycoord - yn;
 		while (1)
 		{
-			if (x < 0 || y < 0 ||x > (mlx_data.map_data.width - 1) * PIXEL_SIZE || y > (mlx_data.map_data.heigh - 1) * PIXEL_SIZE || ((y / PIXEL_SIZE) - 1) > mlx_data.map_data.heigh || (x / PIXEL_SIZE) > mlx_data.map_data.width)
+			if (x < 0 || y < 0 || x > (mlx_data.map_data.width - 1) * PIXEL_SIZE || y > (mlx_data.map_data.heigh - 1) * PIXEL_SIZE || ((y / PIXEL_SIZE) - 1) > mlx_data.map_data.heigh || (x / PIXEL_SIZE) > mlx_data.map_data.width)
 			{
 				x = 3500;
 				y = 3300;

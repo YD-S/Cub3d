@@ -299,6 +299,6 @@ void	open_map(t_mlx_data mlx_data)
 	projection(mlx_data);
 	mlx_key_hook(mlx_data.mlx, &hook, (void *)&mlx_data);
 	mlx_cursor_hook(mlx_data.mlx, &cursor_hook, (void *)&mlx_data);
-	mlx_loop_hook(mlx_data.mlx, &repaint_map, (void *)&mlx_data);
+	mlx_loop_hook(mlx_data.mlx, (void *)&repaint_map, (void *)&mlx_data);
 	mlx_loop(mlx_data.mlx);
 }
