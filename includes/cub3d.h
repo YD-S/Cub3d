@@ -35,6 +35,8 @@ typedef struct s_map_data
 	char		*EA;
 	char		*F;
 	char		*C;
+	int			*F_color;
+	int			*C_color;
 	int			heigh;
 	int			width;
 }				t_map_data;
@@ -93,4 +95,5 @@ void	paint_square_td(t_mlx_data mlx_data, int distance, int x_start, int color);
 void ft_put_pixel(mlx_image_t *img, uint32_t x, uint32_t y, uint32_t color);
 void cursor_hook(double xpos, double ypos, void* param);
 void	*repaint_map(void *param);
+void	free_str_array(char **array);
 #endif // CUB3D_H

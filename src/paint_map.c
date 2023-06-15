@@ -59,28 +59,24 @@ void	paint_image_black(t_mlx_data mlx_data)
 {
 	int		x;
 	int		i;
-	char	**ceil_split;
-	char	**floor_split;
+
 
 	x = 0;
 	i = 0;
-	ceil_split = ft_split(mlx_data.map_data.C, ',');
-	floor_split = ft_split(mlx_data.map_data.F, ',');
 	while (x < SCREEN_WIDTH)
 	{
 		i = 0;
 		while (i < SCREEN_HEIGH)
 		{
 			if(i > SCREEN_HEIGH / 2)
-				ft_put_pixel(mlx_data.img, x, i, get_rgba(ft_atoi(floor_split[0]),ft_atoi(floor_split[1]),ft_atoi(floor_split[2]),255));
+				ft_put_pixel(mlx_data.img, x, i, get_rgba(mlx_data.map_data.F_color[0],mlx_data.map_data.F_color[1],mlx_data.map_data.F_color[2],255));
 			else
-				ft_put_pixel(mlx_data.img, x, i, get_rgba(ft_atoi(ceil_split[0]),ft_atoi(ceil_split[1]),ft_atoi(ceil_split[2]),255));
+				ft_put_pixel(mlx_data.img, x, i, get_rgba(mlx_data.map_data.C_color[0],mlx_data.map_data.C_color[1],mlx_data.map_data.C_color[2],255));
 			i++;
 		}
 		x++;
 	}
-	free_str_array(ceil_split);
-	free_str_array(floor_split);
+
 }
 
 void	paint_square(int x_coord, int y_coord, t_mlx_data mlx_data,

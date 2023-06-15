@@ -392,6 +392,34 @@ t_map	**get_map(char *map_name, t_map_data map_data)
 	return (map);
 }
 
+int	*init_F_color(t_map_data map_data)
+{
+	int	*F_color;
+	char	**floor_split;
+
+	F_color = ft_calloc(3, sizeof(int));
+	floor_split = ft_split(map_data.F, ',');
+	F_color[0] = ft_atoi(floor_split[0]);
+	F_color[1] = ft_atoi(floor_split[1]);
+	F_color[2] = ft_atoi(floor_split[2]);
+	free_str_array(floor_split);
+	return (F_color);
+}
+
+int	*init_C_color(t_map_data map_data)
+{
+	int	*C_color;
+	char	**ceil_split;
+
+	C_color = ft_calloc(3, sizeof(int));
+	ceil_split = ft_split(map_data.C, ',');
+	C_color[0] = ft_atoi(ceil_split[0]);
+	C_color[1] = ft_atoi(ceil_split[1]);
+	C_color[2] = ft_atoi(ceil_split[2]);
+	free_str_array(ceil_split);
+	return (C_color);
+}
+
 t_map_data	parse_map(char *map)
 {
 	t_map_data	map_data;
@@ -400,5 +428,7 @@ t_map_data	parse_map(char *map)
 	map_data.heigh = get_map_heigh(map);
 	map_data.width = get_map_width(map);
 	map_data.map = get_map(map, map_data);
+	map_data.F_color = init_F_color(map_data);
+	map_data.C_color = init_C_color(map_data);
 	return (map_data);
 }

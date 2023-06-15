@@ -6,7 +6,7 @@
 /*   By: delvira- <delvira-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 15:30:17 by delvira-          #+#    #+#             */
-/*   Updated: 2023/06/15 16:35:59 by delvira-         ###   ########.fr       */
+/*   Updated: 2023/06/15 16:52:50 by delvira-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -310,4 +310,3 @@ void	projection(t_mlx_data mlx_data)
 		x_start += SCREEN_WIDTH / mlx_data.proj_data.n_rays;
 	}
 }
-
