@@ -11,7 +11,7 @@
 # define PIXEL_SIZE (16 * SCALE)
 # define SCREEN_WIDTH 1920.
 # define SCREEN_HEIGH 1080.
-# define RAY_DIV .05
+# define RAY_DIV 0.05
 # define WALL_HEIGHT_SCALE (25 * SCALE)
 
 typedef struct s_point

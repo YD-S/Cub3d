@@ -6,7 +6,7 @@
 /*   By: delvira- <delvira-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 15:30:17 by delvira-          #+#    #+#             */
-/*   Updated: 2023/06/14 17:35:04 by delvira-         ###   ########.fr       */
+/*   Updated: 2023/06/15 16:11:30 by delvira-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -188,6 +188,47 @@ t_point	check_vertical_steps(t_mlx_data mlx_data, float angle)
 	return(p1);
 }
 
+// int		calculate_angle_hor_bug(t_mlx_data mlx_data, t_point point)
+// {
+// 	float angle;
+
+// 	t_point player_point;
+
+// 	player_point.xcoord = roundf(mlx_data.player.position.xcoord + 100
+// 			* sin(grade_to_radian(mlx_data.player.angle % 360)));
+// 	player_point.ycoord = roundf(mlx_data.player.position.ycoord + 100
+// 			* cos(grade_to_radian(mlx_data.player.angle % 360)));
+	
+// 	angle = ((player_point.xcoord * point.xcoord) + (player_point.ycoord * point.ycoord)) / (sqrt(pow(player_point.xcoord, 2) + pow(player_point.ycoord, 2)) * sqrt(pow(point.xcoord, 2) + pow(point.ycoord, 2)));
+// 	angle = acos(angle);
+// 	printf("angle: %d\n", radian_to_angle(angle));
+// return(0);
+
+// }
+
+int check_bug_hor(t_mlx_data mlx_data, t_point point)
+{
+	if ((mlx_data.player.angle % 360) < 340 && (mlx_data.player.angle % 360) > 200)
+	{
+		if (point.xcoord > mlx_data.player.position.xcoord)
+			return (1);
+		else
+			return (0);
+	}
+	return (0);
+}
+int check_bug_ver(t_mlx_data mlx_data, t_point point)
+{
+	if ((mlx_data.player.angle % 360) < 250 && (mlx_data.player.angle % 360) > 110)
+	{
+		if (point.ycoord > mlx_data.player.position.ycoord)
+			return (1);
+		else
+			return (0);
+	}
+	return (0);
+}
+
 t_point	check_distance(t_mlx_data mlx_data, float angle)
 {
 	t_point	hor;
@@ -198,10 +239,9 @@ t_point	check_distance(t_mlx_data mlx_data, float angle)
 	hor = check_horizontal_steps(mlx_data, angle);
 	ver = check_vertical_steps(mlx_data, angle);
 
-
-	if (hor.xcoord < 0 || hor.ycoord < 0)
+	if (hor.xcoord < 0 || hor.ycoord < 0 || check_bug_hor(mlx_data, hor) == 1)
 		return(ver);
-	if (ver.xcoord < 0 || ver.ycoord < 0)
+	if (ver.xcoord < 0 || ver.ycoord < 0 || check_bug_ver(mlx_data, ver) == 1)
 		return(hor);
 	distancehor = pow(fabsf(hor.xcoord - mlx_data.player.position.xcoord), 2) + pow(fabsf(hor.ycoord - mlx_data.player.position.ycoord), 2);
 	distancever = pow(fabsf(ver.xcoord - mlx_data.player.position.xcoord), 2) + pow(fabsf(ver.ycoord - mlx_data.player.position.ycoord), 2);
