@@ -296,7 +296,7 @@ void	projection(t_mlx_data mlx_data)
 	int	color;
 	float	x_start;
 	float	ray_height;
-	int	y;
+//	int	y;
 
 	i = 0;
 	x_start = 0;
@@ -304,7 +304,7 @@ void	projection(t_mlx_data mlx_data)
 	{
 		ray_height = SCREEN_HEIGH / (mlx_data.proj_data.ray_array[i].distance) * WALL_HEIGHT_SCALE;
 		color = 255 - 255 * (mlx_data.proj_data.ray_array[i].distance / 1000);
-		y = ((SCREEN_HEIGH / 2) - (ray_height / 2));
+	//	y = ((SCREEN_HEIGH / 2) - (ray_height / 2));
 		paint_square_td(mlx_data, ray_height, SCREEN_WIDTH - x_start, color);
 		i++;
 		x_start += SCREEN_WIDTH / mlx_data.proj_data.n_rays;

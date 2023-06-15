@@ -53,13 +53,24 @@ void	print_map(t_map_data map_data)
 	}
 }
 
-
+int verify_path(char *str)
+{
+	int fd;
+	fd = open(str, O_RDONLY);
+	if (fd == -1)
+	{
+		close(fd);
+		return (ft_printf("File error\n"),1);
+	}
+	close(fd);
+	return (0);
+}
 
 int	main(int nargs, char **args)
 {
 	t_mlx_data	mlx_data;
 
-	if (nargs != 2)
+	if (nargs != 2 || verify_path(args[1]))
 		exit(0);
 	atexit(leaks);
 	mlx_data = init_mlx_data(args[1]);
