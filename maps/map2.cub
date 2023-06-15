@@ -4,8 +4,8 @@ SO	./textures/GrayWalls.xpm
 WE	./textures/GrayWalls.xpm
 EA	./textures/GrayWalls.xpm
 
-F	68,68,68
-C	51,204,255
+F	34,49,63
+C	1,1,112
 
 11111111111111111   11111
 10000000000000001   10001

@@ -6,7 +6,7 @@
 /*   By: delvira- <delvira-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 15:30:17 by delvira-          #+#    #+#             */
-/*   Updated: 2023/06/15 16:11:30 by delvira-         ###   ########.fr       */
+/*   Updated: 2023/06/15 16:35:59 by delvira-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -187,25 +187,6 @@ t_point	check_vertical_steps(t_mlx_data mlx_data, float angle)
 	
 	return(p1);
 }
-
-// int		calculate_angle_hor_bug(t_mlx_data mlx_data, t_point point)
-// {
-// 	float angle;
-
-// 	t_point player_point;
-
-// 	player_point.xcoord = roundf(mlx_data.player.position.xcoord + 100
-// 			* sin(grade_to_radian(mlx_data.player.angle % 360)));
-// 	player_point.ycoord = roundf(mlx_data.player.position.ycoord + 100
-// 			* cos(grade_to_radian(mlx_data.player.angle % 360)));
-	
-// 	angle = ((player_point.xcoord * point.xcoord) + (player_point.ycoord * point.ycoord)) / (sqrt(pow(player_point.xcoord, 2) + pow(player_point.ycoord, 2)) * sqrt(pow(point.xcoord, 2) + pow(point.ycoord, 2)));
-// 	angle = acos(angle);
-// 	printf("angle: %d\n", radian_to_angle(angle));
-// return(0);
-
-// }
-
 int check_bug_hor(t_mlx_data mlx_data, t_point point)
 {
 	if ((mlx_data.player.angle % 360) < 340 && (mlx_data.player.angle % 360) > 200)
