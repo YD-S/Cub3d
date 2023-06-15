@@ -84,7 +84,7 @@ void	hook(struct mlx_key_data keydata, void *param)
 		vel.ycoord = roundf(3 * cos(grade_to_radian(mlx_data->player.angle
 						+ 90)));
 	}
-	if (!collision(mlx_data, get_xcord(*mlx_data, vel),get_ycord(*mlx_data, vel)))
+	if (!collision(mlx_data, mlx_data->player.position.xcoord + (vel.xcoord * 2), mlx_data->player.position.ycoord + (vel.ycoord * 2)))
 	{
 		mlx_data->player.position.xcoord += vel.xcoord;
 		mlx_data->player.position.ycoord += vel.ycoord;

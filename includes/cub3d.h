@@ -8,7 +8,7 @@
 
 # define SCALE 1
 
-# define PIXEL_SIZE (16 * SCALE)
+# define PIXEL_SIZE (32 * SCALE)
 # define SCREEN_WIDTH 1920.
 # define SCREEN_HEIGH 1080.
 # define RAY_DIV 0.05
