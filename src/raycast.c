@@ -6,7 +6,7 @@
 /*   By: delvira- <delvira-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 15:30:17 by delvira-          #+#    #+#             */
-/*   Updated: 2023/06/13 19:38:37 by delvira-         ###   ########.fr       */
+/*   Updated: 2023/06/15 16:52:50 by delvira-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ t_point    check_horizontal_steps(t_mlx_data mlx_data, float angle)
 		y = mlx_data.player.position.ycoord - yn;
 		while (1)
 		{
-			if (x < 0 || y < 0 ||x > (mlx_data.map_data.width - 1) * PIXEL_SIZE || y > (mlx_data.map_data.heigh - 1) * PIXEL_SIZE || ((y / PIXEL_SIZE) - 1) > mlx_data.map_data.heigh || (x / PIXEL_SIZE) > mlx_data.map_data.width)
+			if (x < 0 || y < 0 || x > (mlx_data.map_data.width - 1) * PIXEL_SIZE || y > (mlx_data.map_data.heigh - 1) * PIXEL_SIZE || ((y / PIXEL_SIZE) - 1) > mlx_data.map_data.heigh || (x / PIXEL_SIZE) > mlx_data.map_data.width)
 			{
 				x = 3500;
 				y = 3300;
@@ -187,6 +187,28 @@ t_point	check_vertical_steps(t_mlx_data mlx_data, float angle)
 	
 	return(p1);
 }
+int check_bug_hor(t_mlx_data mlx_data, t_point point)
+{
+	if ((mlx_data.player.angle % 360) < 340 && (mlx_data.player.angle % 360) > 200)
+	{
+		if (point.xcoord > mlx_data.player.position.xcoord)
+			return (1);
+		else
+			return (0);
+	}
+	return (0);
+}
+int check_bug_ver(t_mlx_data mlx_data, t_point point)
+{
+	if ((mlx_data.player.angle % 360) < 250 && (mlx_data.player.angle % 360) > 110)
+	{
+		if (point.ycoord > mlx_data.player.position.ycoord)
+			return (1);
+		else
+			return (0);
+	}
+	return (0);
+}
 
 t_point	check_distance(t_mlx_data mlx_data, float angle)
 {
@@ -198,10 +220,9 @@ t_point	check_distance(t_mlx_data mlx_data, float angle)
 	hor = check_horizontal_steps(mlx_data, angle);
 	ver = check_vertical_steps(mlx_data, angle);
 
-
-	if (hor.xcoord < 0 || hor.ycoord < 0)
+	if (hor.xcoord < 0 || hor.ycoord < 0 || check_bug_hor(mlx_data, hor) == 1)
 		return(ver);
-	if (ver.xcoord < 0 || ver.ycoord < 0)
+	if (ver.xcoord < 0 || ver.ycoord < 0 || check_bug_ver(mlx_data, ver) == 1)
 		return(hor);
 	distancehor = pow(fabsf(hor.xcoord - mlx_data.player.position.xcoord), 2) + pow(fabsf(hor.ycoord - mlx_data.player.position.ycoord), 2);
 	distancever = pow(fabsf(ver.xcoord - mlx_data.player.position.xcoord), 2) + pow(fabsf(ver.ycoord - mlx_data.player.position.ycoord), 2);
@@ -275,7 +296,7 @@ void	projection(t_mlx_data mlx_data)
 	int	color;
 	float	x_start;
 	float	ray_height;
-	//int	y;
+	int	y;
 
 	i = 0;
 	x_start = 0;
@@ -283,10 +304,9 @@ void	projection(t_mlx_data mlx_data)
 	{
 		ray_height = SCREEN_HEIGH / (mlx_data.proj_data.ray_array[i].distance) * WALL_HEIGHT_SCALE;
 		color = 255 - 255 * (mlx_data.proj_data.ray_array[i].distance / 1000);
-	//	y = ((SCREEN_HEIGH / 2) - (ray_height / 2));
+		y = ((SCREEN_HEIGH / 2) - (ray_height / 2));
 		paint_square_td(mlx_data, ray_height, SCREEN_WIDTH - x_start, color);
 		i++;
 		x_start += SCREEN_WIDTH / mlx_data.proj_data.n_rays;
 	}
 }
-

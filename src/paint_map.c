@@ -42,11 +42,24 @@ void	draw_lines(t_point point0, t_point point1, mlx_image_t *img)
 		}
 	}
 }
+void	free_str_array(char **array)
+{
+	int x;
+
+	x = 0;
+	while (array[x])
+	{
+		free(array[x]);
+		x++;
+	}
+	free(array);
+}
 
 void	paint_image_black(t_mlx_data mlx_data)
 {
-	int	x;
-	int	i;
+	int		x;
+	int		i;
+
 
 	x = 0;
 	i = 0;
@@ -56,13 +69,14 @@ void	paint_image_black(t_mlx_data mlx_data)
 		while (i < SCREEN_HEIGH)
 		{
 			if(i > SCREEN_HEIGH / 2)
-				ft_put_pixel(mlx_data.img, x, i, get_rgba(34,49,63,255));
+				ft_put_pixel(mlx_data.img, x, i, get_rgba(mlx_data.map_data.F_color[0],mlx_data.map_data.F_color[1],mlx_data.map_data.F_color[2],255));
 			else
-				ft_put_pixel(mlx_data.img, x, i, get_rgba(1,1,112,255));
+				ft_put_pixel(mlx_data.img, x, i, get_rgba(mlx_data.map_data.C_color[0],mlx_data.map_data.C_color[1],mlx_data.map_data.C_color[2],255));
 			i++;
 		}
 		x++;
 	}
+
 }
 
 void	paint_square(int x_coord, int y_coord, t_mlx_data mlx_data,
@@ -299,5 +313,6 @@ void	open_map(t_mlx_data mlx_data)
 	projection(mlx_data);
 	mlx_key_hook(mlx_data.mlx, &hook, (void *)&mlx_data);
 	mlx_cursor_hook(mlx_data.mlx, &cursor_hook, (void *)&mlx_data);
+	mlx_loop_hook(mlx_data.mlx, (void *)&repaint_map, (void *)&mlx_data);
 	mlx_loop(mlx_data.mlx);
 }

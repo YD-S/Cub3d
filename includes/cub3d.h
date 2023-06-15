@@ -8,10 +8,10 @@
 
 # define SCALE 1
 
-# define PIXEL_SIZE (16 * SCALE)
+# define PIXEL_SIZE (32 * SCALE)
 # define SCREEN_WIDTH 1920.
 # define SCREEN_HEIGH 1080.
-# define RAY_DIV .2
+# define RAY_DIV 0.05
 # define WALL_HEIGHT_SCALE (25 * SCALE)
 
 typedef struct s_point
@@ -26,20 +26,8 @@ typedef struct s_map
 	t_point		point;
 }				t_map;
 
-typedef struct s_data_count
-{
-	int		NO;
-	int		SO;
-	int		WE;
-	int		EA;
-	int		F;
-	int		C;
-	int		total;
-}				t_data_count;
-
 typedef struct s_map_data
 {
-	t_data_count count;
 	t_map		**map;
 	char		*NO;
 	char		*SO;
@@ -47,6 +35,8 @@ typedef struct s_map_data
 	char		*EA;
 	char		*F;
 	char		*C;
+	int			*F_color;
+	int			*C_color;
 	int			heigh;
 	int			width;
 }				t_map_data;
@@ -104,4 +94,6 @@ void	projection(t_mlx_data mlx_data);
 void	paint_square_td(t_mlx_data mlx_data, int distance, int x_start, int color);
 void ft_put_pixel(mlx_image_t *img, uint32_t x, uint32_t y, uint32_t color);
 void cursor_hook(double xpos, double ypos, void* param);
+void	*repaint_map(void *param);
+void	free_str_array(char **array);
 #endif // CUB3D_H
