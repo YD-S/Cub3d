@@ -8,7 +8,7 @@
 
 # define SCALE 1
 
-# define PIXEL_SIZE (32 * SCALE)
+# define PIXEL_SIZE (16 * SCALE)
 # define SCREEN_WIDTH 1920.
 # define SCREEN_HEIGH 1080.
 # define RAY_DIV 0.05
@@ -18,13 +18,22 @@ typedef struct s_point
 {
 	float	xcoord;
 	float	ycoord;
+	int		type;
 }				t_point;
 
 typedef struct s_map
 {
 	char		value;
 	t_point		point;
-}				t_map;
+}
+t_map;
+typedef struct s_txtures
+{
+	mlx_texture_t *NO;
+	mlx_texture_t *SO;
+	mlx_texture_t *EA;
+	mlx_texture_t *WE;
+}				t_textures;
 
 typedef struct s_map_data
 {
@@ -39,6 +48,7 @@ typedef struct s_map_data
 	int			*C_color;
 	int			heigh;
 	int			width;
+	t_textures texture;
 }				t_map_data;
 
 typedef struct s_player

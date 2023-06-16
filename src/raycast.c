@@ -219,6 +219,8 @@ t_point	check_distance(t_mlx_data mlx_data, float angle)
 
 	hor = check_horizontal_steps(mlx_data, angle);
 	ver = check_vertical_steps(mlx_data, angle);
+	hor.type = 0;
+	ver.type = 1;
 
 	if (hor.xcoord < 0 || hor.ycoord < 0 || check_bug_hor(mlx_data, hor) == 1)
 		return(ver);
@@ -231,10 +233,7 @@ t_point	check_distance(t_mlx_data mlx_data, float angle)
 		return(ver);
 	}
 	else if (distancever > distancehor)
-	{
-
 		return(hor);
-	}
 	return (hor);
 }
 
@@ -263,6 +262,19 @@ t_mlx_data	put_ray(t_mlx_data mlx_data)
 	return (mlx_data);
 }
 
+void ft_paint_texture(t_mlx_data *mlx_data, int x, int y)
+{
+	int square_width = ceil(SCREEN_WIDTH / mlx_data->proj_data.n_rays);
+	if(mlx_data->proj_data.ray_array[x / square_width].end_point.type == 1 && x > mlx_data->player.position.xcoord)
+		printf("ft_put_tex_east();\n");
+	else if(mlx_data->proj_data.ray_array[x / square_width].end_point.type == 1 && x < mlx_data->player.position.xcoord)
+		printf("ft_put_tex_west();\n");
+	else if (mlx_data->proj_data.ray_array[x / square_width].end_point.type == 0 && y > mlx_data->player.position.ycoord)
+		printf("ft_put_tex_north();\n");
+	else if (mlx_data->proj_data.ray_array[x / square_width].end_point.type == 0 && y < mlx_data->player.position.ycoord)
+		printf("ft_put_tex_south();\n");
+}
+
 void	paint_square_td(t_mlx_data mlx_data, int height, int x_start, int color)
 {
 	int	square_width;
@@ -276,6 +288,7 @@ void	paint_square_td(t_mlx_data mlx_data, int height, int x_start, int color)
 		y = 0;
 		while (y < height)
 		{
+			ft_paint_texture(&mlx_data, x + x_start, (SCREEN_HEIGH / 2) - (height / 2) + y);
 			ft_put_pixel(mlx_data.img, x + x_start, (SCREEN_HEIGH / 2) - (height / 2) + y, get_rgba(10, color, 100, 200));
 			y++;
 		}

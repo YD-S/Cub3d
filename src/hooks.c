@@ -58,6 +58,10 @@ void	hook(struct mlx_key_data keydata, void *param)
 	if (keydata.key == MLX_KEY_ESCAPE)
 	{
 		mlx_terminate(mlx_data->mlx);
+		mlx_delete_texture(mlx_data->map_data.texture.NO);
+		mlx_delete_texture(mlx_data->map_data.texture.SO);
+		mlx_delete_texture(mlx_data->map_data.texture.EA);
+		mlx_delete_texture(mlx_data->map_data.texture.WE);
 		exit(0);
 	}
 	else if (keydata.key == MLX_KEY_W)
