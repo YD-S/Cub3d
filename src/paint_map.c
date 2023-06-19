@@ -296,12 +296,21 @@ t_projection_data	init_proj_data()
 	return (proj_data);
 }
 
+void ft_get_texture(t_mlx_data *mlx_data)
+{
+	mlx_data->map_data.texture.NO = mlx_load_png(mlx_data->map_data.NO);
+	mlx_data->map_data.texture.EA = mlx_load_png(mlx_data->map_data.EA);
+	mlx_data->map_data.texture.SO = mlx_load_png(mlx_data->map_data.SO);
+	mlx_data->map_data.texture.WE = mlx_load_png(mlx_data->map_data.WE);
+}
+
 void	open_map(t_mlx_data mlx_data)
 {
 	mlx_data.mlx = mlx_init(SCREEN_WIDTH, SCREEN_HEIGH, "cub3d", false);
 	mlx_set_cursor_mode(mlx_data.mlx, MLX_MOUSE_HIDDEN);
 	mlx_data.img = mlx_new_image(mlx_data.mlx, 1920, 1080);
 	mlx_image_to_window(mlx_data.mlx, mlx_data.img, 0, 0);
+	ft_get_texture(&mlx_data);
 	paint_image_black(mlx_data);
 	paint_map(mlx_data);
 	paint_horizontal_lines(mlx_data);

@@ -70,9 +70,9 @@ int	main(int nargs, char **args)
 {
 	t_mlx_data	mlx_data;
 
+	atexit(leaks);
 	if (nargs != 2 || verify_path(args[1]))
 		exit(0);
-	atexit(leaks);
 	mlx_data = init_mlx_data(args[1]);
 	open_map(mlx_data);
 	print_map(mlx_data.map_data);
