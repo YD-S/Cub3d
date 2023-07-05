@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycast.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: delvira- <delvira-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ysingh <ysingh@student.42malaga.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 15:30:17 by delvira-          #+#    #+#             */
-/*   Updated: 2023/06/15 16:52:50 by delvira-         ###   ########.fr       */
+/*   Updated: 2023/06/29 20:59:09 by ysingh           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -249,8 +249,8 @@ t_mlx_data	put_ray(t_mlx_data mlx_data)
 	while (angle < 15)
 	{
 		point1 = check_distance(mlx_data, angle);
-		point1.xcoord = point1.xcoord;
-		point1.ycoord = point1.ycoord;
+	//	point1.xcoord = point1.xcoord;
+	//	point1.ycoord = point1.ycoord;
 		mlx_data.proj_data.ray_array[x].end_point = point1;
 		mlx_data.proj_data.ray_array[x].angle = ((int)(mlx_data.player.angle + angle) % 360);
 		mlx_data.proj_data.ray_array[x].distance = sqrt(pow(fabsf(point1.xcoord - mlx_data.player.position.xcoord), 2) + pow(fabsf(point1.ycoord - mlx_data.player.position.ycoord), 2));
@@ -262,33 +262,45 @@ t_mlx_data	put_ray(t_mlx_data mlx_data)
 	return (mlx_data);
 }
 
-void ft_paint_texture(t_mlx_data *mlx_data, int x, int y)
+void ft_put_tex(char *tex, t_mlx_data *mlx_data, int num_ray, int x)
+{
+	(void)tex;
+	(void)mlx_data;
+	(void)x;
+	(void)num_ray;
+}
+
+char ft_texture(t_mlx_data *mlx_data, int x, int y)
 {
 	int square_width = ceil(SCREEN_WIDTH / mlx_data->proj_data.n_rays);
-	if(mlx_data->proj_data.ray_array[x / square_width].end_point.type == 1 && x > mlx_data->player.position.xcoord)
-		printf("ft_put_tex_east();\n");
-	else if(mlx_data->proj_data.ray_array[x / square_width].end_point.type == 1 && x < mlx_data->player.position.xcoord)
-		printf("ft_put_tex_west();\n");
-	else if (mlx_data->proj_data.ray_array[x / square_width].end_point.type == 0 && y > mlx_data->player.position.ycoord)
-		printf("ft_put_tex_north();\n");
-	else if (mlx_data->proj_data.ray_array[x / square_width].end_point.type == 0 && y < mlx_data->player.position.ycoord)
-		printf("ft_put_tex_south();\n");
+	if(mlx_data->proj_data.ray_array[x / square_width].end_point.type == 1 && mlx_data->proj_data.ray_array[x / square_width].end_point.xcoord > mlx_data->player.position.xcoord)
+		return ('E');
+	else if(mlx_data->proj_data.ray_array[x / square_width].end_point.type == 1 && mlx_data->proj_data.ray_array[x / square_width].end_point.xcoord < mlx_data->player.position.xcoord)
+		return ('W');
+	else if (mlx_data->proj_data.ray_array[x / square_width].end_point.type == 0 && mlx_data->proj_data.ray_array[y / square_width].end_point.ycoord < mlx_data->player.position.ycoord)
+		return ('N');
+	else if (mlx_data->proj_data.ray_array[x / square_width].end_point.type == 0 && mlx_data->proj_data.ray_array[y / square_width].end_point.ycoord > mlx_data->player.position.ycoord)
+		return ('S');
+	return ('\0');
 }
 
 void	paint_square_td(t_mlx_data mlx_data, int height, int x_start, int color)
 {
 	int	square_width;
 	int	x;
-	int y;
+	int y = 0;
+	char tex;
+	double step;
 
 	x = 0;
 	square_width = ceil(SCREEN_WIDTH / mlx_data.proj_data.n_rays);
+	tex = ft_texture(&mlx_data, x + x_start, (SCREEN_HEIGH / 2) - (height / 2) + y);
+	step = 1.0 * mlx_data.map_data.texture.NO->height / mlx_data.proj_data.ray_array[x / square_width].ray_heigh;
 	while (x < square_width)
 	{
 		y = 0;
 		while (y < height)
 		{
-			ft_paint_texture(&mlx_data, x + x_start, (SCREEN_HEIGH / 2) - (height / 2) + y);
 			ft_put_pixel(mlx_data.img, x + x_start, (SCREEN_HEIGH / 2) - (height / 2) + y, get_rgba(10, color, 100, 200));
 			y++;
 		}
@@ -316,6 +328,7 @@ void	projection(t_mlx_data mlx_data)
 	while (i < mlx_data.proj_data.n_rays)
 	{
 		ray_height = SCREEN_HEIGH / (mlx_data.proj_data.ray_array[i].distance) * WALL_HEIGHT_SCALE;
+		mlx_data.proj_data.ray_array[i].ray_heigh = ray_height;
 		color = 255 - 255 * (mlx_data.proj_data.ray_array[i].distance / 1000);
 	//	y = ((SCREEN_HEIGH / 2) - (ray_height / 2));
 		paint_square_td(mlx_data, ray_height, SCREEN_WIDTH - x_start, color);

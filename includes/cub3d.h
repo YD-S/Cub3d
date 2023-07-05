@@ -62,6 +62,7 @@ typedef struct s_ray
 	t_point	end_point;
 	float	distance;
 	float	angle;
+	int		ray_heigh;
 }	t_ray;
 
 typedef struct s_projection_data
