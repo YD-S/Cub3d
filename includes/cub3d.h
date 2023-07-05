@@ -107,4 +107,5 @@ void ft_put_pixel(mlx_image_t *img, uint32_t x, uint32_t y, uint32_t color);
 void cursor_hook(double xpos, double ypos, void* param);
 void	*repaint_map(void *param);
 void	free_str_array(char **array);
+uint32_t 	get_rgba32(int r, int g, int b, int a);
 #endif // CUB3D_H
