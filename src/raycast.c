@@ -244,7 +244,7 @@ t_mlx_data	put_ray(t_mlx_data mlx_data)
 	int					x;
 
 	angle = -15;
-	// angle = 0;
+	//angle = 0;
 	x = 0;
 	while (angle < 15)
 	{
@@ -262,49 +262,93 @@ t_mlx_data	put_ray(t_mlx_data mlx_data)
 	return (mlx_data);
 }
 
-void ft_put_tex(char *tex, t_mlx_data *mlx_data, int num_ray, int x)
-{
-	(void)tex;
-	(void)mlx_data;
-	(void)x;
-	(void)num_ray;
-}
-
 char ft_texture(t_mlx_data *mlx_data, int x, int y)
 {
-	int square_width = ceil(SCREEN_WIDTH / mlx_data->proj_data.n_rays);
-	if(mlx_data->proj_data.ray_array[x / square_width].end_point.type == 1 && mlx_data->proj_data.ray_array[x / square_width].end_point.xcoord > mlx_data->player.position.xcoord)
+	(void)y;
+	if(mlx_data->proj_data.ray_array[x].end_point.type == 1 && mlx_data->proj_data.ray_array[x].end_point.xcoord > mlx_data->player.position.xcoord)
 		return ('E');
-	else if(mlx_data->proj_data.ray_array[x / square_width].end_point.type == 1 && mlx_data->proj_data.ray_array[x / square_width].end_point.xcoord < mlx_data->player.position.xcoord)
+	else if(mlx_data->proj_data.ray_array[x].end_point.type == 1 && mlx_data->proj_data.ray_array[x].end_point.xcoord < mlx_data->player.position.xcoord)
 		return ('W');
-	else if (mlx_data->proj_data.ray_array[x / square_width].end_point.type == 0 && mlx_data->proj_data.ray_array[y / square_width].end_point.ycoord < mlx_data->player.position.ycoord)
+	else if (mlx_data->proj_data.ray_array[x].end_point.type == 0 && mlx_data->proj_data.ray_array[x].end_point.ycoord < mlx_data->player.position.ycoord)
 		return ('N');
-	else if (mlx_data->proj_data.ray_array[x / square_width].end_point.type == 0 && mlx_data->proj_data.ray_array[y / square_width].end_point.ycoord > mlx_data->player.position.ycoord)
+	else if (mlx_data->proj_data.ray_array[x].end_point.type == 0 && mlx_data->proj_data.ray_array[x].end_point.ycoord > mlx_data->player.position.ycoord)
 		return ('S');
 	return ('\0');
 }
 
+int getxtex(char tex, int x, t_mlx_data mlx_data)
+{
+	int ret = 0;
+	if(tex =='N')
+		return ((((int)mlx_data.proj_data.ray_array[x].end_point.xcoord % PIXEL_SIZE) * mlx_data.map_data.texture.NO->width) / PIXEL_SIZE);
+	else if (tex == 'S')
+		return ((((int)mlx_data.proj_data.ray_array[x].end_point.xcoord % PIXEL_SIZE) * mlx_data.map_data.texture.SO->width) / PIXEL_SIZE);
+	else if(tex == 'W')
+		return ((((int)mlx_data.proj_data.ray_array[x].end_point.ycoord % PIXEL_SIZE) * mlx_data.map_data.texture.WE->width) / PIXEL_SIZE);
+	else if (tex == 'E')
+		return ((((int)mlx_data.proj_data.ray_array[x].end_point.ycoord % PIXEL_SIZE) * mlx_data.map_data.texture.EA->width) / PIXEL_SIZE);
+	return ret;
+}
+
+float getstep(int height, t_mlx_data mlx_data, char tex)
+{
+	float ret = 0;
+	if(tex =='N')
+		ret = 1.0 * mlx_data.map_data.texture.NO->height / height;
+	else if (tex == 'S')
+		ret = 1.0 * mlx_data.map_data.texture.SO->height / height;
+	else if(tex == 'W')
+		ret = 1.0 * mlx_data.map_data.texture.WE->height / height;
+	else if (tex == 'E')
+		ret = 1.0 * mlx_data.map_data.texture.EA->height / height;
+	return (ret);
+}
+
+uint32_t reversecolor(unsigned int coloraux)
+{
+	int	red;
+	int	green;
+	int	blue;
+	int	alpha;
+
+	red = coloraux >> 24;
+	green = coloraux << 8 >> 24;
+	blue = coloraux << 16 >> 24;
+	alpha = coloraux << 24 >> 24;
+	return (get_rgba(alpha, blue, green, red));
+}
+
+uint32_t gettexcolor(char tex, int x, int y, t_mlx_data mlx_data)
+{
+	uint32_t color = 0;
+	if(tex =='N')
+		color = ((unsigned int *)mlx_data.map_data.texture.NO->pixels)[x + y * mlx_data.map_data.texture.NO->width];
+	else if (tex == 'S')
+		color = ((unsigned int *)mlx_data.map_data.texture.SO->pixels)[x + y * mlx_data.map_data.texture.SO->width];
+	else if(tex == 'W')
+		color = ((unsigned int *)mlx_data.map_data.texture.WE->pixels)[x + y * mlx_data.map_data.texture.WE->width];
+	else if (tex == 'E')
+		color = ((unsigned int *)mlx_data.map_data.texture.EA->pixels)[x + y * mlx_data.map_data.texture.EA->width];
+	return (reversecolor(color));
+}
+
 void	paint_square_td(t_mlx_data mlx_data, int height, int x_start, int color)
 {
-	int	square_width;
+	(void)color;
 	int	x;
 	int y = 0;
 	char tex;
-	double step;
-
+	int xtex = 0;
+	float step = 0;
+	y = 0;
 	x = 0;
-	square_width = ceil(SCREEN_WIDTH / mlx_data.proj_data.n_rays);
-	tex = ft_texture(&mlx_data, x + x_start, (SCREEN_HEIGH / 2) - (height / 2) + y);
-	step = 1.0 * mlx_data.map_data.texture.NO->height / mlx_data.proj_data.ray_array[x / square_width].ray_heigh;
-	while (x < square_width)
+	tex = ft_texture(&mlx_data, x_start, (SCREEN_HEIGH / 2) - (height / 2) + y);
+	xtex = getxtex(tex, x_start, mlx_data);
+	step = getstep(height, mlx_data, tex);
+	while (y < height)
 	{
-		y = 0;
-		while (y < height)
-		{
-			ft_put_pixel(mlx_data.img, x + x_start, (SCREEN_HEIGH / 2) - (height / 2) + y, get_rgba(10, color, 100, 200));
-			y++;
-		}
-		x++;
+		ft_put_pixel(mlx_data.img, x_start, (SCREEN_HEIGH / 2) - (height / 2) + y, gettexcolor(tex, xtex, y*step, mlx_data));
+		y++;
 	}
 
 }
@@ -321,7 +365,6 @@ void	projection(t_mlx_data mlx_data)
 	int	color;
 	float	x_start;
 	float	ray_height;
-//	int	y;
 
 	i = 0;
 	x_start = 0;
@@ -330,7 +373,6 @@ void	projection(t_mlx_data mlx_data)
 		ray_height = SCREEN_HEIGH / (mlx_data.proj_data.ray_array[i].distance) * WALL_HEIGHT_SCALE;
 		mlx_data.proj_data.ray_array[i].ray_heigh = ray_height;
 		color = 255 - 255 * (mlx_data.proj_data.ray_array[i].distance / 1000);
-	//	y = ((SCREEN_HEIGH / 2) - (ray_height / 2));
 		paint_square_td(mlx_data, ray_height, SCREEN_WIDTH - x_start, color);
 		i++;
 		x_start += SCREEN_WIDTH / mlx_data.proj_data.n_rays;
