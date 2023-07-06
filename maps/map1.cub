@@ -1,7 +1,7 @@
-NO ./textures/Ntest.png
-SO ./textures/Stest.png
-WE ./textures/Wtest.png
-EA ./textures/Etest.png
+NO ./textures/walls.png
+SO ./textures/walls.png
+WE ./textures/walls.png
+EA ./textures/walls.png
 F 34,49,63
 C 1,1,112
 

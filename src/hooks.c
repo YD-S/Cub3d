@@ -74,14 +74,14 @@ void	hook(struct mlx_key_data keydata, void *param)
 		vel.xcoord = roundf(-3 * sin(grade_to_radian(mlx_data->player.angle)));
 		vel.ycoord = roundf(-3 * cos(grade_to_radian(mlx_data->player.angle)));
 	}
-	else if (keydata.key == MLX_KEY_D)
+	else if (keydata.key == MLX_KEY_A)
 	{
 		vel.xcoord = roundf(-3 * sin(grade_to_radian(mlx_data->player.angle
 						+ 90)));
 		vel.ycoord = roundf(-3 * cos(grade_to_radian(mlx_data->player.angle
 						+ 90)));
 	}
-	else if (keydata.key == MLX_KEY_A)
+	else if (keydata.key == MLX_KEY_D)
 	{
 		vel.xcoord = roundf(3 * sin(grade_to_radian(mlx_data->player.angle
 						+ 90)));

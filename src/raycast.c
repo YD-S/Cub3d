@@ -6,7 +6,7 @@
 /*   By: ysingh <ysingh@student.42malaga.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 15:30:17 by delvira-          #+#    #+#             */
-/*   Updated: 2023/06/29 20:59:09 by ysingh           ###   ########.fr       */
+/*   Updated: 2023/07/06 14:01:24 by ysingh           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -335,13 +335,11 @@ uint32_t gettexcolor(char tex, int x, int y, t_mlx_data mlx_data)
 void	paint_square_td(t_mlx_data mlx_data, int height, int x_start, int color)
 {
 	(void)color;
-	int	x;
 	int y = 0;
 	char tex;
 	int xtex = 0;
 	float step = 0;
 	y = 0;
-	x = 0;
 	tex = ft_texture(&mlx_data, x_start, (SCREEN_HEIGH / 2) - (height / 2) + y);
 	xtex = getxtex(tex, x_start, mlx_data);
 	step = getstep(height, mlx_data, tex);
@@ -374,7 +372,7 @@ void	projection(t_mlx_data mlx_data)
 		ray_height = SCREEN_HEIGH / (mlx_data.proj_data.ray_array[i].distance) * WALL_HEIGHT_SCALE;
 		mlx_data.proj_data.ray_array[i].ray_heigh = ray_height;
 		color = 255 - 255 * (mlx_data.proj_data.ray_array[i].distance / 1000);
-	//º	y = ((SCREEN_HEIGH / 2) - (ray_height / 2));
+	//	y = ((SCREEN_HEIGH / 2) - (ray_height / 2));
 		paint_square_td(mlx_data, ray_height, x_start, color);
 		i++;
 		x_start += 1;
