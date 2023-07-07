@@ -6,7 +6,7 @@
 /*   By: ysingh <ysingh@student.42malaga.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 15:30:17 by delvira-          #+#    #+#             */
-/*   Updated: 2023/07/06 14:01:24 by ysingh           ###   ########.fr       */
+/*   Updated: 2023/07/07 19:52:59 by ysingh           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -280,13 +280,13 @@ int getxtex(char tex, int x, t_mlx_data mlx_data)
 {
 	int ret = 0;
 	if(tex =='N')
-		return ((((int)mlx_data.proj_data.ray_array[x].end_point.xcoord % PIXEL_SIZE) * mlx_data.map_data.texture.NO->width) / PIXEL_SIZE);
+		return ((((PIXEL_SIZE - (int)mlx_data.proj_data.ray_array[x].end_point.xcoord % PIXEL_SIZE)) * mlx_data.map_data.texture.NO->width) / PIXEL_SIZE);
 	else if (tex == 'S')
 		return ((((int)mlx_data.proj_data.ray_array[x].end_point.xcoord % PIXEL_SIZE) * mlx_data.map_data.texture.SO->width) / PIXEL_SIZE);
 	else if(tex == 'W')
 		return ((((int)mlx_data.proj_data.ray_array[x].end_point.ycoord % PIXEL_SIZE) * mlx_data.map_data.texture.WE->width) / PIXEL_SIZE);
 	else if (tex == 'E')
-		return ((((int)mlx_data.proj_data.ray_array[x].end_point.ycoord % PIXEL_SIZE) * mlx_data.map_data.texture.EA->width) / PIXEL_SIZE);
+		return (((PIXEL_SIZE -((int)mlx_data.proj_data.ray_array[x].end_point.ycoord % PIXEL_SIZE)) * mlx_data.map_data.texture.EA->width) / PIXEL_SIZE);
 	return ret;
 }
 
