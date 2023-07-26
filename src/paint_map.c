@@ -291,7 +291,6 @@ void	put_player(t_mlx_data mlx_data)
 	}
 }
 
-
 t_projection_data	init_proj_data()
 {
 	t_projection_data	proj_data;

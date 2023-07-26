@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycast.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ysingh <ysingh@student.42malaga.com>       +#+  +:+       +#+        */
+/*   By: delvira- <delvira-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 15:30:17 by delvira-          #+#    #+#             */
-/*   Updated: 2023/07/07 19:52:59 by ysingh           ###   ########.fr       */
+/*   Updated: 2023/07/26 13:20:08 by delvira-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -245,7 +245,7 @@ t_mlx_data	put_ray(t_mlx_data mlx_data)
 
 	angle = -15;
 	//angle = 0;
-	x = 0;
+	x = SCREEN_WIDTH;
 	while (angle < 15)
 	{
 		point1 = check_distance(mlx_data, angle);
@@ -256,7 +256,7 @@ t_mlx_data	put_ray(t_mlx_data mlx_data)
 		mlx_data.proj_data.ray_array[x].distance = sqrt(pow(fabsf(point1.xcoord - mlx_data.player.position.xcoord), 2) + pow(fabsf(point1.ycoord - mlx_data.player.position.ycoord), 2));
 		draw_lines(mlx_data.player.position, point1, mlx_data.img);
 		angle += RAY_DIV;
-		x++;
+		x--;
 	}
 	// printf("distance: %d\n", (int)(mlx_data.proj_data.ray_array[15].distance* 0.01));
 	return (mlx_data);
@@ -280,13 +280,13 @@ int getxtex(char tex, int x, t_mlx_data mlx_data)
 {
 	int ret = 0;
 	if(tex =='N')
-		return ((((PIXEL_SIZE - (int)mlx_data.proj_data.ray_array[x].end_point.xcoord % PIXEL_SIZE)) * mlx_data.map_data.texture.NO->width) / PIXEL_SIZE);
+		return (((((int)mlx_data.proj_data.ray_array[x].end_point.xcoord % PIXEL_SIZE)) * mlx_data.map_data.texture.NO->width) / PIXEL_SIZE);
 	else if (tex == 'S')
-		return ((((int)mlx_data.proj_data.ray_array[x].end_point.xcoord % PIXEL_SIZE) * mlx_data.map_data.texture.SO->width) / PIXEL_SIZE);
+		return (((( PIXEL_SIZE - (int)mlx_data.proj_data.ray_array[x].end_point.xcoord % PIXEL_SIZE)) * mlx_data.map_data.texture.SO->width) / PIXEL_SIZE);
 	else if(tex == 'W')
-		return ((((int)mlx_data.proj_data.ray_array[x].end_point.ycoord % PIXEL_SIZE) * mlx_data.map_data.texture.WE->width) / PIXEL_SIZE);
+		return ((((PIXEL_SIZE - (int)mlx_data.proj_data.ray_array[x].end_point.ycoord % PIXEL_SIZE)) * mlx_data.map_data.texture.WE->width) / PIXEL_SIZE);
 	else if (tex == 'E')
-		return (((PIXEL_SIZE -((int)mlx_data.proj_data.ray_array[x].end_point.ycoord % PIXEL_SIZE)) * mlx_data.map_data.texture.EA->width) / PIXEL_SIZE);
+		return (((((int)mlx_data.proj_data.ray_array[x].end_point.ycoord % PIXEL_SIZE)) * mlx_data.map_data.texture.EA->width) / PIXEL_SIZE);
 	return ret;
 }
 
@@ -346,6 +346,7 @@ void	paint_square_td(t_mlx_data mlx_data, int height, int x_start, int color)
 	while (y < height)
 	{
 		ft_put_pixel(mlx_data.img, x_start, (SCREEN_HEIGH / 2) - (height / 2) + y, gettexcolor(tex, xtex, y*step, mlx_data));
+		//ft_put_pixel(mlx_data.img, x_start, (SCREEN_HEIGH / 2) - (height / 2) + y, 0xFFFFFFFF);
 		y++;
 	}
 
