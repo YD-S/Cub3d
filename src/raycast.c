@@ -280,7 +280,7 @@ int getxtex(char tex, int x, t_mlx_data mlx_data)
 {
 	int ret = 0;
 	if(tex =='N')
-		return ((((int)mlx_data.proj_data.ray_array[x].end_point.xcoord % PIXEL_SIZE) * mlx_data.map_data.texture.NO->width) / PIXEL_SIZE);
+		return (((int)mlx_data.proj_data.ray_array[x].end_point.xcoord % PIXEL_SIZE) * mlx_data.map_data.texture.NO->width / PIXEL_SIZE);
 	else if (tex == 'S')
 		return (((( PIXEL_SIZE - (int)mlx_data.proj_data.ray_array[x].end_point.xcoord % PIXEL_SIZE)) * mlx_data.map_data.texture.SO->width) / PIXEL_SIZE);
 	else if(tex == 'W')
@@ -321,14 +321,17 @@ uint32_t reversecolor(unsigned int coloraux)
 uint32_t gettexcolor(char tex, int x, int y, t_mlx_data mlx_data)
 {
 	uint32_t color = 0;
-	if(tex =='N')
-		color = ((unsigned int *)mlx_data.map_data.texture.NO->pixels)[x + y * mlx_data.map_data.texture.NO->width];
-	else if (tex == 'S')
-		color = ((unsigned int *)mlx_data.map_data.texture.SO->pixels)[x + y * mlx_data.map_data.texture.SO->width];
-	else if(tex == 'W')
-		color = ((unsigned int *)mlx_data.map_data.texture.WE->pixels)[x + y * mlx_data.map_data.texture.WE->width];
-	else if (tex == 'E')
-		color = ((unsigned int *)mlx_data.map_data.texture.EA->pixels)[x + y * mlx_data.map_data.texture.EA->width];
+	if(x + y * mlx_data.map_data.texture.NO->width < mlx_data.map_data.texture.NO->width * mlx_data.map_data.texture.NO->height)
+	{
+		if(tex =='N')
+			color = ((unsigned int *)mlx_data.map_data.texture.NO->pixels)[x + y * mlx_data.map_data.texture.NO->width];
+		else if (tex == 'S')
+			color = ((unsigned int *)mlx_data.map_data.texture.SO->pixels)[x + y * mlx_data.map_data.texture.SO->width];
+		else if(tex == 'W')
+			color = ((unsigned int *)mlx_data.map_data.texture.WE->pixels)[x + y * mlx_data.map_data.texture.WE->width];
+		else if (tex == 'E')
+			color = ((unsigned int *)mlx_data.map_data.texture.EA->pixels)[x + y * mlx_data.map_data.texture.EA->width];
+	}
 	return (reversecolor(color));
 }
 

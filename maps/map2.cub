@@ -1,9 +1,7 @@
-
-NO	./textures/GrayWalls.xpm
-SO	./textures/GrayWalls.xpm
-WE	./textures/GrayWalls.xpm
-EA	./textures/GrayWalls.xpm
-
+SO /Users/ysingh/Desktop/42Cursus/Cub3d/textures/walls.png
+WE /Users/ysingh/Desktop/42Cursus/Cub3d/textures/walls.png
+EA /Users/ysingh/Desktop/42Cursus/Cub3d/textures/walls.png
+NO /Users/ysingh/Desktop/42Cursus/Cub3d/textures/walls.png
 F	34,49,63
 C	1,1,112
 
