@@ -346,7 +346,7 @@ void	paint_square_td(t_mlx_data mlx_data, int height, int x_start, int color)
 	tex = ft_texture(&mlx_data, x_start, (SCREEN_HEIGH / 2) - (height / 2) + y);
 	xtex = getxtex(tex, x_start, mlx_data);
 	step = getstep(height, mlx_data, tex);
-	while (y < height)
+	while (y < height && (SCREEN_HEIGH / 2) - (height / 2) + y < SCREEN_HEIGH)
 	{
 		ft_put_pixel(mlx_data.img, x_start, (SCREEN_HEIGH / 2) - (height / 2) + y, gettexcolor(tex, xtex, y*step, mlx_data));
 		//ft_put_pixel(mlx_data.img, x_start, (SCREEN_HEIGH / 2) - (height / 2) + y, 0xFFFFFFFF);
@@ -373,7 +373,9 @@ void	projection(t_mlx_data mlx_data)
 	x_start = 0;
 	while (i < mlx_data.proj_data.n_rays)
 	{
-		ray_height = SCREEN_HEIGH / (mlx_data.proj_data.ray_array[i].distance) * WALL_HEIGHT_SCALE;
+		ray_height = SCREEN_HEIGH / (mlx_data.proj_data.ray_array[i].distance) * WALL_HEIGHT_SCALE * 0.3;
+		//if (ray_height > SCREEN_HEIGH)
+		//	ray_height = SCREEN_HEIGH;
 		mlx_data.proj_data.ray_array[i].ray_heigh = ray_height;
 		color = 255 - 255 * (mlx_data.proj_data.ray_array[i].distance / 1000);
 	//	y = ((SCREEN_HEIGH / 2) - (ray_height / 2));

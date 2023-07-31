@@ -2,7 +2,9 @@
 
 void	*repaint_map(void *param)
 {
-	t_mlx_data *mlx_data = (t_mlx_data *)param;
+	t_mlx_data	*mlx_data;
+
+	mlx_data = (t_mlx_data *)param;
 	paint_image_black(*mlx_data);
 	projection(*mlx_data);
 	paint_map(*mlx_data);
@@ -10,7 +12,6 @@ void	*repaint_map(void *param)
 	paint_vertical_lines(*mlx_data);
 	put_player(*mlx_data);
 	put_ray(*mlx_data);
-
 	return (0);
 }
 
@@ -29,22 +30,20 @@ int	collision(t_mlx_data *data, float x, float y)
 	return (data->map_data.map[(int)floorf(y)][(int)floorf(x)].value == '1');
 }
 
-float get_xcord(t_mlx_data mlx_data, t_point vel)
+float	get_xcord(t_mlx_data mlx_data, t_point vel)
 {
-	if(mlx_data.player.angle % 360 <= 180)
-		return(mlx_data.player.position.xcoord + vel.xcoord);
+	if (mlx_data.player.angle % 360 <= 180)
+		return (mlx_data.player.position.xcoord + vel.xcoord);
 	else
-		return(mlx_data.player.position.xcoord - vel.xcoord);
-
+		return (mlx_data.player.position.xcoord - vel.xcoord);
 }
 
-float get_ycord(t_mlx_data mlx_data, t_point vel)
+float	get_ycord(t_mlx_data mlx_data, t_point vel)
 {
-	if(mlx_data.player.angle % 360 >= 90 && mlx_data.player.angle % 360 <= 270)
-		return(mlx_data.player.position.ycoord + vel.ycoord);
+	if (mlx_data.player.angle % 360 >= 90 && mlx_data.player.angle % 360 <= 270)
+		return (mlx_data.player.position.ycoord + vel.ycoord);
 	else
-		return(mlx_data.player.position.ycoord - vel.ycoord);
-
+		return (mlx_data.player.position.ycoord - vel.ycoord);
 }
 
 void	hook(struct mlx_key_data keydata, void *param)
@@ -88,7 +87,8 @@ void	hook(struct mlx_key_data keydata, void *param)
 		vel.ycoord = roundf(3 * cos(grade_to_radian(mlx_data->player.angle
 						+ 90)));
 	}
-	if (!collision(mlx_data, mlx_data->player.position.xcoord + (vel.xcoord * 2), mlx_data->player.position.ycoord + (vel.ycoord * 2)))
+	if (!collision(mlx_data, mlx_data->player.position.xcoord + (vel.xcoord
+				* 2), mlx_data->player.position.ycoord + (vel.ycoord * 2)))
 	{
 		mlx_data->player.position.xcoord += vel.xcoord;
 		mlx_data->player.position.ycoord += vel.ycoord;
@@ -96,12 +96,14 @@ void	hook(struct mlx_key_data keydata, void *param)
 	call_movement_hooks(mlx_data, keydata);
 }
 
-void cursor_hook(double xpos, double ypos, void* param)
+void	cursor_hook(double xpos, double ypos, void *param)
 {
+	t_mlx_data	*data;
+
 	(void)ypos;
-	t_mlx_data *data = (t_mlx_data *)param;
-	mlx_set_mouse_pos(data->mlx, SCREEN_WIDTH/2, SCREEN_HEIGH/2);
-	if(xpos - SCREEN_WIDTH/2 > 0)
+	data = (t_mlx_data *)param;
+	mlx_set_mouse_pos(data->mlx, SCREEN_WIDTH / 2, SCREEN_HEIGH / 2);
+	if (xpos - SCREEN_WIDTH / 2 > 0)
 		data->player.angle += 356;
 	else
 		data->player.angle += 4;

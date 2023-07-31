@@ -53,14 +53,15 @@ void	print_map(t_map_data map_data)
 	}
 }
 
-int verify_path(char *str)
+int	verify_path(char *str)
 {
-	int fd;
+	int	fd;
+
 	fd = open(str, O_RDONLY);
 	if (fd == -1)
 	{
 		close(fd);
-		return (ft_printf("File error\n"),1);
+		return (ft_printf("File error\n"), 1);
 	}
 	close(fd);
 	return (0);
@@ -75,6 +76,6 @@ int	main(int nargs, char **args)
 		exit(0);
 	mlx_data = init_mlx_data(args[1]);
 	open_map(mlx_data);
-	print_map(mlx_data.map_data);
+	//print_map(mlx_data.map_data);
 	free_map(mlx_data.map_data);
 }
