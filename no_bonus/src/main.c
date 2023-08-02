@@ -16,6 +16,8 @@ void	free_map(t_map_data map_data)
 	free(map_data.NO);
 	free(map_data.EA);
 	free(map_data.WE);
+	free(map_data.F_color);
+	free(map_data.C_color);
 	x = 0;
 	while (map_data.map[x])
 	{
@@ -61,7 +63,8 @@ int	verify_path(char *str)
 	if (fd == -1)
 	{
 		close(fd);
-		return (ft_printf("File error\n"), 1);
+		ft_printf("File error\n");
+		exit(0);
 	}
 	close(fd);
 	return (0);
@@ -72,15 +75,15 @@ int	main(int nargs, char **args)
 	t_mlx_data	mlx_data;
 
 	atexit(leaks);
-	if (nargs != 2 || verify_path(args[1]))
+	verify_path(args[1]);
+	if (nargs != 2)
 		exit(0);
 	mlx_data = init_mlx_data(args[1]);
+	verify_path(mlx_data.map_data.NO);
+	verify_path(mlx_data.map_data.SO);
+	verify_path(mlx_data.map_data.WE);
+	verify_path(mlx_data.map_data.EA);
 	open_map(mlx_data);
-	//print_map(mlx_data.map_data);
 	free_map(mlx_data.map_data);
-	mlx_delete_texture(mlx_data.map_data.texture.NO);
-	mlx_delete_texture(mlx_data.map_data.texture.SO);
-	mlx_delete_texture(mlx_data.map_data.texture.EA);
-	mlx_delete_texture(mlx_data.map_data.texture.WE);
-	mlx_terminate(mlx_data.mlx);
+
 }

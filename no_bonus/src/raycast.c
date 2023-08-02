@@ -254,7 +254,7 @@ t_mlx_data	put_ray(t_mlx_data mlx_data)
 		mlx_data.proj_data.ray_array[x].end_point = point1;
 		mlx_data.proj_data.ray_array[x].angle = ((int)(mlx_data.player.angle + angle) % 360);
 		mlx_data.proj_data.ray_array[x].distance = sqrt(pow(fabsf(point1.xcoord - mlx_data.player.position.xcoord), 2) + pow(fabsf(point1.ycoord - mlx_data.player.position.ycoord), 2));
-		draw_lines(mlx_data.player.position, point1, mlx_data.img);
+		//draw_lines(mlx_data.player.position, point1, mlx_data.img);
 		angle += RAY_DIV;
 		x--;
 	}

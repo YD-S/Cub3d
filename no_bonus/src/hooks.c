@@ -7,10 +7,10 @@ void	*repaint_map(void *param)
 	mlx_data = (t_mlx_data *)param;
 	paint_image_black(*mlx_data);
 	projection(*mlx_data);
-	paint_map(*mlx_data);
-	paint_horizontal_lines(*mlx_data);
-	paint_vertical_lines(*mlx_data);
-	put_player(*mlx_data);
+	//paint_map(*mlx_data);
+	//paint_horizontal_lines(*mlx_data);
+	//paint_vertical_lines(*mlx_data);
+	//put_player(*mlx_data);
 	put_ray(*mlx_data);
 	return (0);
 }

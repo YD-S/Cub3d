@@ -323,4 +323,10 @@ void	open_map(t_mlx_data mlx_data)
 	//mlx_cursor_hook(mlx_data.mlx, &cursor_hook, (void *)&mlx_data);
 	mlx_loop_hook(mlx_data.mlx, (void *)&repaint_map, (void *)&mlx_data);
 	mlx_loop(mlx_data.mlx);
+	free(mlx_data.proj_data.ray_array);
+	mlx_terminate(mlx_data.mlx);
+	mlx_delete_texture(mlx_data.map_data.texture.NO);
+	mlx_delete_texture(mlx_data.map_data.texture.SO);
+	mlx_delete_texture(mlx_data.map_data.texture.EA);
+	mlx_delete_texture(mlx_data.map_data.texture.WE);
 }

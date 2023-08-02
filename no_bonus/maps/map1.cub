@@ -1,17 +1,17 @@
-SO /Users/delvira-/cursus/cub3d/no_bonus/textures/test.png
-WE /Users/delvira-/cursus/cub3d/no_bonus/textures/test.png
-EA /Users/delvira-/cursus/cub3d/no_bonus/textures/test.png
-NO /Users/delvira-/cursus/cub3d/no_bonus/textures/test.png
+SO /Users/ysingh/Desktop/42Cursus/Cub3d/no_bonus/textures/test.png
+WE /Users/ysingh/Desktop/42Cursus/Cub3d/no_bonus/textures/test.png
+EA /Users/ysingh/Desktop/42Cursus/Cub3d/no_bonus/textures/test.png
+NO /Users/ysingh/Desktop/42Cursus/Cub3d/no_bonus/textures/test.png
 F 34,49,63
 C 1,1,112
 
-1111111111111111111111111
+
 1000000000111111111111111
 1111111111111111111111111
 1011000001110000000000001
 100100000000000000000000111111111
 111111111011000001110000000000001
-100000000011000001110111111111111
+1000000000110000011100111111111111
 111101111111110111000000100011
 11110111111111011101010000001
 11000000110101011100000000001
