@@ -153,5 +153,5 @@ void					projection(t_mlx_data mlx_data);
 int						master_validate(t_mlx_data mlx_data);
 int						check_first_line(t_map **map, int i, int j);
 int						check_last_line(t_map **map, int i, int j);
-
+void	validate_map(t_mlx_data mlx_data);
 #endif // CUB3D_H

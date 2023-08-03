@@ -4,10 +4,8 @@
 t_mlx_data	init_mlx_data(char *map_name)
 {
 	t_mlx_data	mlx_data;
-
 	mlx_data.map_data = parse_map(map_name);
-	if (!master_validate(mlx_data))
-		exit(0);
+	validate_map(mlx_data);
 	return (mlx_data);
 }
 
