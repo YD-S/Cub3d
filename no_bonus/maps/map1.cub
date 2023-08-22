@@ -1,7 +1,7 @@
-SO /Users/yash/Documents/42Cursus/Cub3d/no_bonus/textures/test.png
-WE /Users/yash/Documents/42Cursus/Cub3d/no_bonus/textures/test.png
-EA /Users/yash/Documents/42Cursus/Cub3d/no_bonus/textures/test.png
-NO /Users/yash/Documents/42Cursus/Cub3d/no_bonus/textures/test.png
+SO textures/test.png
+WE textures/test.png
+EA textures/test.png
+NO textures/test.png
 F 34,49,63
 C 1,1,112
 

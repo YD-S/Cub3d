@@ -123,4 +123,10 @@ void	validate_map(t_mlx_data mlx_data)
 		x = 0;
 		y++;
 	}
+	while (map[x])
+	{
+		free(map[x]);
+		x++;
+	}
+	free(map);
 }

@@ -6,6 +6,8 @@ void	leaks(void)
 	system("leaks -q cub3d");
 }
 
+
+
 void	free_map(t_map_data map_data)
 {
 	int	x;
@@ -85,5 +87,4 @@ int	main(int nargs, char **args)
 	verify_path(mlx_data.map_data.EA);
 	open_map(mlx_data);
 	free_map(mlx_data.map_data);
-
 }
