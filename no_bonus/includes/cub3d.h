@@ -151,7 +151,7 @@ void					paint_square_td(t_mlx_data mlx_data, int height,
 void					ft_put_pixel(mlx_image_t *img, uint32_t x, uint32_t y,
 							uint32_t color);
 void					projection(t_mlx_data mlx_data);
-int						master_validate(t_mlx_data mlx_data);
+void						master_validate(t_mlx_data mlx_data);
 int						check_first_line(t_map **map, int i, int j);
 int						check_last_line(t_map **map, int i, int j);
 void	validate_map(t_mlx_data mlx_data);
