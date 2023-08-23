@@ -1,9 +1,9 @@
-
 #include "cub3d.h"
 
 t_mlx_data	init_mlx_data(char *map_name)
 {
 	t_mlx_data	mlx_data;
+
 	mlx_data.map_data = parse_map(map_name);
 	master_validate(mlx_data);
 	return (mlx_data);

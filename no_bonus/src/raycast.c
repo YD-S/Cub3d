@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycast.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: delvira- <delvira-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ysingh <ysingh@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 15:30:17 by delvira-          #+#    #+#             */
-/*   Updated: 2023/08/23 16:01:14 by delvira-         ###   ########.fr       */
+/*   Updated: 2023/08/23 19:09:21 by ysingh           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ t_point	horiz_2nd_loop(t_mlx_data mlx_data, float x, float y, float angle)
 
 	while (1)
 	{
-		if (x < 0 || y < 0 || x > (mlx_data.map_data.width - 1) * PIXEL_SIZE || y > (mlx_data.map_data.heigh - 1) * PIXEL_SIZE || ((y / PIXEL_SIZE) - 1) > mlx_data.map_data.heigh || (x / PIXEL_SIZE) > mlx_data.map_data.width)
+		if (condition5(mlx_data, x, y))
 		{
 			x = 3500;
 			y = 3300;
@@ -77,9 +77,9 @@ t_point	horiz_2nd_loop(t_mlx_data mlx_data, float x, float y, float angle)
 			< mlx_data.map_data.heigh
 			&& (x / PIXEL_SIZE) < mlx_data.map_data.width)
 		{
-			if ((mlx_data.player.angle % 360) + angle < 90 && mlx_data.map_data.map[(int)((y) / PIXEL_SIZE)][(int)((x) / PIXEL_SIZE)].value == '1')
+			if (condition3(mlx_data, x, y, angle))
 				break ;
-			else if ((mlx_data.player.angle % 360) + angle >= 90 && mlx_data.map_data.map[(int)((y) / PIXEL_SIZE)][(int)((x) / PIXEL_SIZE)].value == '1')
+			else if (condition4(mlx_data, x, y, angle))
 				break ;
 		}
 		y += PIXEL_SIZE;
@@ -95,7 +95,7 @@ t_point    check_horizontal_steps(t_mlx_data mlx_data, float angle)
 	t_norm_vars	n;
 
 	n = init_norm_vars();
-	if (abs((int)(mlx_data.player.angle + angle) % 360) <= 270 && abs(((int)(mlx_data.player.angle + angle) % 360) >= 90))
+	if (condition2(mlx_data, angle))
 	{
 		n.yn = mlx_data.player.position.ycoord - ((int)
 				(mlx_data.player.position.ycoord / PIXEL_SIZE) *PIXEL_SIZE);
@@ -313,23 +313,23 @@ int getxtex(char tex, int x, t_mlx_data mlx_data)
 	if (tex == 'N')
 		return (((int)mlx_data.proj_data.ray_array[x].end_point.xcoord
 				% PIXEL_SIZE)
-			* mlx_data.map_data.texture.NO->width / PIXEL_SIZE);
+			* mlx_data.map_data.texture.no->width / PIXEL_SIZE);
 	else if (tex == 'S')
 		return ((((PIXEL_SIZE
 						- (int)
 						mlx_data.proj_data.ray_array[x].end_point.xcoord
 						% PIXEL_SIZE))
-				* mlx_data.map_data.texture.SO->width) / PIXEL_SIZE);
+				* mlx_data.map_data.texture.so->width) / PIXEL_SIZE);
 	else if (tex == 'W')
 		return ((((PIXEL_SIZE
 						- (int)
 						mlx_data.proj_data.ray_array[x].end_point.ycoord
 						% PIXEL_SIZE))
-				* mlx_data.map_data.texture.WE->width) / PIXEL_SIZE);
+				* mlx_data.map_data.texture.we->width) / PIXEL_SIZE);
 	else if (tex == 'E')
 		return ((((int)mlx_data.proj_data.ray_array[x].end_point.ycoord
 					% PIXEL_SIZE)
-				* mlx_data.map_data.texture.EA->width) / PIXEL_SIZE);
+				* mlx_data.map_data.texture.ea->width) / PIXEL_SIZE);
 	return (ret);
 }
 
@@ -339,13 +339,13 @@ float getstep(int height, t_mlx_data mlx_data, char tex)
 
 	ret = 0;
 	if (tex == 'N')
-		ret = 1.0 * mlx_data.map_data.texture.NO->height / height;
+		ret = 1.0 * mlx_data.map_data.texture.no->height / height;
 	else if (tex == 'S')
-		ret = 1.0 * mlx_data.map_data.texture.SO->height / height;
+		ret = 1.0 * mlx_data.map_data.texture.so->height / height;
 	else if (tex == 'W')
-		ret = 1.0 * mlx_data.map_data.texture.WE->height / height;
+		ret = 1.0 * mlx_data.map_data.texture.we->height / height;
 	else if (tex == 'E')
-		ret = 1.0 * mlx_data.map_data.texture.EA->height / height;
+		ret = 1.0 * mlx_data.map_data.texture.ea->height / height;
 	return (ret);
 }
 
@@ -368,24 +368,24 @@ uint32_t gettexcolor(char tex, int x, int y, t_mlx_data mlx_data)
 	uint32_t	color;
 
 	color = 0;
-	if (x + y * mlx_data.map_data.texture.NO->width
-		< mlx_data.map_data.texture.NO->width
-		* mlx_data.map_data.texture.NO->height)
+	if (x + y * mlx_data.map_data.texture.no->width
+		< mlx_data.map_data.texture.no->width
+		* mlx_data.map_data.texture.no->height)
 	{
 		if (tex == 'N')
 			color = ((unsigned int *)
-					mlx_data.map_data.texture.NO->pixels)[x + y
-				* mlx_data.map_data.texture.NO->width];
+					mlx_data.map_data.texture.no->pixels)[x + y
+				* mlx_data.map_data.texture.no->width];
 		else if (tex == 'S')
 			color = ((unsigned int *)
-					mlx_data.map_data.texture.SO->pixels)[x + y
-				* mlx_data.map_data.texture.SO->width];
+					mlx_data.map_data.texture.so->pixels)[x + y
+				* mlx_data.map_data.texture.so->width];
 		else if (tex == 'W')
-			color = ((unsigned int *)mlx_data.map_data.texture.WE->pixels)[x + y
-				* mlx_data.map_data.texture.WE->width];
+			color = ((unsigned int *)mlx_data.map_data.texture.we->pixels)[x + y
+				* mlx_data.map_data.texture.we->width];
 		else if (tex == 'E')
-			color = ((unsigned int *)mlx_data.map_data.texture.EA->pixels)[x + y
-				* mlx_data.map_data.texture.EA->width];
+			color = ((unsigned int *)mlx_data.map_data.texture.ea->pixels)[x + y
+				* mlx_data.map_data.texture.ea->width];
 	}
 	return (reversecolor(color));
 }

@@ -6,20 +6,18 @@ void	leaks(void)
 	system("leaks -q cub3d");
 }
 
-
-
 void	free_map(t_map_data map_data)
 {
 	int	x;
 
-	free(map_data.C);
-	free(map_data.F);
-	free(map_data.SO);
-	free(map_data.NO);
-	free(map_data.EA);
-	free(map_data.WE);
-	free(map_data.F_color);
-	free(map_data.C_color);
+	free(map_data.c);
+	free(map_data.f);
+	free(map_data.so);
+	free(map_data.no);
+	free(map_data.ea);
+	free(map_data.we);
+	free(map_data.f_color);
+	free(map_data.c_color);
 	x = 0;
 	while (map_data.map[x])
 	{
@@ -34,12 +32,12 @@ void	print_map(t_map_data map_data)
 	int	x;
 	int	i;
 
-	printf("NO: %s\n", map_data.NO);
-	printf("SO: %s\n", map_data.SO);
-	printf("WE: %s\n", map_data.WE);
-	printf("EA: %s\n", map_data.EA);
-	printf("F: %s\n", map_data.F);
-	printf("C: %s\n", map_data.C);
+	printf("NO: %s\n", map_data.no);
+	printf("SO: %s\n", map_data.so);
+	printf("WE: %s\n", map_data.we);
+	printf("EA: %s\n", map_data.ea);
+	printf("F: %s\n", map_data.f);
+	printf("C: %s\n", map_data.c);
 	printf("heigh: %i\n", map_data.heigh);
 	printf("width: %i\n", map_data.width);
 	x = 0;
@@ -81,10 +79,10 @@ int	main(int nargs, char **args)
 	if (nargs != 2)
 		exit(0);
 	mlx_data = init_mlx_data(args[1]);
-	verify_path(mlx_data.map_data.NO);
-	verify_path(mlx_data.map_data.SO);
-	verify_path(mlx_data.map_data.WE);
-	verify_path(mlx_data.map_data.EA);
+	verify_path(mlx_data.map_data.no);
+	verify_path(mlx_data.map_data.so);
+	verify_path(mlx_data.map_data.we);
+	verify_path(mlx_data.map_data.ea);
 	open_map(mlx_data);
 	free_map(mlx_data.map_data);
 }

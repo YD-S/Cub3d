@@ -1,6 +1,6 @@
 #include "cub3d.h"
 
-t_map **cpy_map(t_map **map)
+t_map	**cpy_map(t_map **map)
 {
 	int		x;
 	int		y;
@@ -37,51 +37,47 @@ t_map **cpy_map(t_map **map)
 	return (cpy_map);
 }
 
-void exit_error(char *error_message)
+void	exit_error(char *error_message)
 {
 	printf("%s", error_message);
 	exit(0);
 }
 
-int check_player(t_map **map, t_mlx_data mlx_data)
+int	check_player(t_map **map, t_mlx_data mlx_data)
 {
-	int x = 0;
-	int y = 0;
-	int player = 0;
+	int	x;
+	int	y;
+	int	player;
 
+	x = 0;
+	y = 0;
+	player = 0;
 	while (x < mlx_data.map_data.heigh)
 	{
 		y = 0;
 		while (y < mlx_data.map_data.width)
 		{
-			if(mlx_data.map_data.map[x][y].value == 'N' || mlx_data.map_data.map[x][y].value == 'S' || mlx_data.map_data.map[x][y].value == 'E' || mlx_data.map_data.map[x][y].value == 'W')
+			if (condition1(mlx_data, x, y))
 				player += 1;
 			y++;
 		}
 		x++;
 	}
 	if (player != 1)
-	{
-		x = 0;
-		while (map[x])
-		{
-			free(map[x]);
-			x++;
-		}
-		free(map);
-		exit_error("Error\nMap must have one player\n");
-		return 0;
-	}
-	return 1;
+		free_t_map(map);
+	return (1);
 }
 
-int flood_fill(t_map **map, int x, int y, t_mlx_data *mlx_data)
+int	flood_fill(t_map **map, int x, int y, t_mlx_data *mlx_data)
 {
-	if(x < 0 || x > mlx_data->map_data.width || y < 0 || y > mlx_data->map_data.heigh || map[y][x].value == ' ')
+	if (x < 0 || x > mlx_data->map_data.width || y < 0
+		|| y > mlx_data->map_data.heigh || map[y][x].value == ' ')
 		exit_error("Error\nMap must be surrounded by 1 or ' '\n");
 	if (map[y][x].value == '1' || map[y][x].value == 'Q')
 		return (1);
-	if (map[y][x].value == '0' || map[y][x].value == 'N' || map[y][x].value == 'S' || map[y][x].value == 'E' || map[y][x].value == 'W')
+	if (map[y][x].value == '0' || map[y][x].value == 'N'
+		|| map[y][x].value == 'S' || map[y][x].value == 'E'
+		|| map[y][x].value == 'W')
 	{
 		map[y][x].value = 'Q';
 		flood_fill(map, x + 1, y, mlx_data);
@@ -92,15 +88,17 @@ int flood_fill(t_map **map, int x, int y, t_mlx_data *mlx_data)
 	return (0);
 }
 
-void master_validate(t_mlx_data mlx_data)
+void	master_validate(t_mlx_data mlx_data)
 {
-	t_map **map;
-	int j = 0;
+	t_map	**map;
+	int		j;
+	int		x;
+	int		y;
+
+	j = 0;
 	map = cpy_map(mlx_data.map_data.map);
-	int x = get_player_position(mlx_data).xcoord * PIXEL_SIZE
-		+ PIXEL_SIZE / 2;
-	int y = get_player_position(mlx_data).ycoord * PIXEL_SIZE
-		+ PIXEL_SIZE / 2;
+	x = get_player_position(mlx_data).xcoord * PIXEL_SIZE + PIXEL_SIZE / 2;
+	y = get_player_position(mlx_data).ycoord * PIXEL_SIZE + PIXEL_SIZE / 2;
 	flood_fill(map, x / PIXEL_SIZE, y / PIXEL_SIZE, &mlx_data);
 	check_player(map, mlx_data);
 	while (map[j])
