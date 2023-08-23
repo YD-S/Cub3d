@@ -1,7 +1,7 @@
-SO textures/test.png
-WE textures/test.png
-EA textures/test.png
-NO textures/test.png
+SO textures/red.png
+WE textures/brick.png
+EA textures/blue.png
+NO textures/grey.png
 F 34,49,63
 C 1,1,112
 
