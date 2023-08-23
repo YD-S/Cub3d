@@ -81,6 +81,17 @@ typedef struct s_mlx_data
 
 }						t_mlx_data;
 
+typedef struct s_norm_vars
+{
+	float	yn;
+	float	xn;
+	float	x;
+	float	y;
+	t_point	p1;
+}	t_norm_vars;
+
+
+
 void					free_map(t_map_data map_data);
 void					print_map(t_map_data map_data);
 int						verify_path(char *str);

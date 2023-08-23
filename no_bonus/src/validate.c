@@ -43,22 +43,22 @@ void exit_error(char *error_message)
 	exit(0);
 }
 
-int check_player(t_map **map)
+int check_player(t_map **map, t_mlx_data mlx_data)
 {
 	int x = 0;
 	int y = 0;
 	int player = 0;
 
-	while (map[y])
+	while (x < mlx_data.map_data.heigh)
 	{
-		while (map[y][x].value)
+		y = 0;
+		while (y < mlx_data.map_data.width)
 		{
-			if (map[y][x].value == 'N' || map[y][x].value == 'S' || map[y][x].value == 'E' || map[y][x].value == 'W')
-				player++;
-			x++;
+			if(mlx_data.map_data.map[x][y].value == 'N' || mlx_data.map_data.map[x][y].value == 'S' || mlx_data.map_data.map[x][y].value == 'E' || mlx_data.map_data.map[x][y].value == 'W')
+				player += 1;
+			y++;
 		}
-		x = 0;
-		y++;
+		x++;
 	}
 	if (player != 1)
 	{
@@ -102,7 +102,7 @@ void master_validate(t_mlx_data mlx_data)
 	int y = get_player_position(mlx_data).ycoord * PIXEL_SIZE
 		+ PIXEL_SIZE / 2;
 	flood_fill(map, x / PIXEL_SIZE, y / PIXEL_SIZE, &mlx_data);
-	check_player(map);
+	check_player(map, mlx_data);
 	while (map[j])
 	{
 		free(map[j]);
