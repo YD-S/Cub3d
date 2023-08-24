@@ -3,232 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   raycast.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ysingh <ysingh@student.42.fr>              +#+  +:+       +#+        */
+/*   By: delvira- <delvira-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 15:30:17 by delvira-          #+#    #+#             */
-/*   Updated: 2023/08/23 19:09:21 by ysingh           ###   ########.fr       */
+/*   Updated: 2023/08/24 20:06:13 by delvira-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-t_norm_vars	init_norm_vars(void)
-{
-	t_norm_vars	n;
-
-	n.yn = 0;
-	n.xn = 0;
-	n.x = 0;
-	n.y = 0;
-	return (n);
-}
-
-int	radian_to_angle(float radian)
-{
-	float	angle;
-
-	angle = fabsf(radian) * (180 / M_PI);
-	return (angle);
-}
-
-
-t_point	horiz_1st_loop(t_mlx_data mlx_data, float x, float y, float angle)
-{
-	t_point	p1;
-
-	while (1)
-	{
-		if (x < 0 || y < 0 || x > (mlx_data.map_data.width - 1) * PIXEL_SIZE
-			|| y > (mlx_data.map_data.heigh - 1) * PIXEL_SIZE || ((y
-					/ PIXEL_SIZE) - 1) > mlx_data.map_data.heigh
-			|| (x / PIXEL_SIZE) > mlx_data.map_data.width)
-		{
-			x = 3500;
-			y = 3300;
-			break ;
-		}
-		else if (x > 0 && y > 0 && ((y / PIXEL_SIZE) - 1)
-			< mlx_data.map_data.heigh && (x / PIXEL_SIZE)
-			< mlx_data.map_data.width
-			&& mlx_data.map_data.map[(int)(y / PIXEL_SIZE)
-			- 1][(int)(x / PIXEL_SIZE)].value == '1')
-			break ;
-		y -= PIXEL_SIZE;
-		x -= PIXEL_SIZE * tan(grade_to_radian(mlx_data.player.angle + angle));
-	}
-	p1.xcoord = x;
-	p1.ycoord = y;
-	return (p1);
-}
-
-t_point	horiz_2nd_loop(t_mlx_data mlx_data, float x, float y, float angle)
-{
-	t_point	p1;
-
-	while (1)
-	{
-		if (condition5(mlx_data, x, y))
-		{
-			x = 3500;
-			y = 3300;
-			break ;
-		}
-		else if (x > 0 && y > 0 && ((y / PIXEL_SIZE) - 1)
-			< mlx_data.map_data.heigh
-			&& (x / PIXEL_SIZE) < mlx_data.map_data.width)
-		{
-			if (condition3(mlx_data, x, y, angle))
-				break ;
-			else if (condition4(mlx_data, x, y, angle))
-				break ;
-		}
-		y += PIXEL_SIZE;
-		x += PIXEL_SIZE * tan(grade_to_radian(mlx_data.player.angle + angle));
-	}
-	p1.xcoord = x;
-	p1.ycoord = y;
-	return (p1);
-}
-
-t_point    check_horizontal_steps(t_mlx_data mlx_data, float angle)
-{
-	t_norm_vars	n;
-
-	n = init_norm_vars();
-	if (condition2(mlx_data, angle))
-	{
-		n.yn = mlx_data.player.position.ycoord - ((int)
-				(mlx_data.player.position.ycoord / PIXEL_SIZE) *PIXEL_SIZE);
-		n.xn = n.yn * (float)tan(grade_to_radian(mlx_data.player.angle
-					+ angle));
-		n.x = mlx_data.player.position.xcoord - n.xn;
-		n.y = mlx_data.player.position.ycoord - n.yn;
-		n.p1 = horiz_1st_loop(mlx_data, n.x, n.y, angle);
-	}
-	else
-	{
-		n.yn = PIXEL_SIZE - (mlx_data.player.position.ycoord
-				- ((int)(mlx_data.player.position.ycoord
-						/ PIXEL_SIZE) *PIXEL_SIZE));
-		n.xn = n.yn *(float)tan(grade_to_radian(mlx_data.player.angle
-					+ angle));
-		n.x = mlx_data.player.position.xcoord + n.xn;
-		n.y = mlx_data.player.position.ycoord + n.yn;
-		n.p1 = horiz_2nd_loop(mlx_data, n.x, n.y, angle);
-	}
-	return (n.p1);
-}
-
-t_point	ver_1st_loop(t_mlx_data mlx_data, float x, float y, float angle)
-{
-	t_point	p1;
-
-	while (1)
-	{
-		if (x < 0 || y < 0 || x > (mlx_data.map_data.width - 1)
-			* PIXEL_SIZE || y > (mlx_data.map_data.heigh) * PIXEL_SIZE
-			|| (int)(y / PIXEL_SIZE) - 1 > mlx_data.map_data.heigh
-				|| (int)((x) / PIXEL_SIZE) > mlx_data.map_data.width)
-		{
-			x = 3500;
-			y = 3300;
-			break ;
-		}
-		else if ((int)((y) / PIXEL_SIZE) < mlx_data.map_data.heigh
-				&& (int)((x) / PIXEL_SIZE) < mlx_data.map_data.width
-					&& mlx_data.map_data.map[(int)((y) / PIXEL_SIZE)][(int)((x)
-					/ PIXEL_SIZE)].value == '1')
-			break ;
-		x += PIXEL_SIZE;
-		y += PIXEL_SIZE / tan(grade_to_radian(mlx_data.player.angle + angle));
-	}
-	p1.xcoord = x;
-	p1.ycoord = y;
-	return (p1);
-}
-
-t_point ver_2nd_loop(t_mlx_data mlx_data, float x, float y, float angle)
-{
-	t_point	p1;
-
-	while (1)
-	{
-		if (x < 0 || y < 0 || x > (mlx_data.map_data.width - 1)
-			* PIXEL_SIZE || y > (mlx_data.map_data.heigh) * PIXEL_SIZE
-			|| (int)(y / PIXEL_SIZE) - 1 > mlx_data.map_data.heigh
-			|| (int)(x / PIXEL_SIZE) > mlx_data.map_data.width)
-		{
-			x = 3500;
-			y = 3300;
-			break ;
-		}
-		else if ((int)((y) / PIXEL_SIZE) < mlx_data.map_data.heigh
-			&& (int)((x / PIXEL_SIZE) - 1) < mlx_data.map_data.width
-				&& mlx_data.map_data.map[(int)(y / PIXEL_SIZE)][(int)(x /
-				PIXEL_SIZE) - 1].value == '1')
-			break ;
-		x -= PIXEL_SIZE;
-		y -= PIXEL_SIZE / tan(grade_to_radian(mlx_data.player.angle + angle));
-	}
-	p1.xcoord = x;
-	p1.ycoord = y;
-	return (p1);
-}
-
-t_point	check_vertical_steps(t_mlx_data mlx_data, float angle)
-{
-	t_norm_vars	n;
-
-	n = init_norm_vars();
-	if (abs(((int)(mlx_data.player.angle + angle) % 360) <= 180)
-		&& abs(((int)(mlx_data.player.angle + angle) % 360) >= 0))
-	{
-		n.xn = PIXEL_SIZE - (mlx_data.player.position.xcoord - ((int)
-					(mlx_data.player.position.xcoord
-						/ PIXEL_SIZE) *PIXEL_SIZE));
-		n.yn = n.xn / tan(grade_to_radian(mlx_data.player.angle + angle));
-		n.x = mlx_data.player.position.xcoord + n.xn;
-		n.y = mlx_data.player.position.ycoord + n.yn;
-		n.p1 = ver_1st_loop(mlx_data, n.x, n.y, angle);
-	}
-	else
-	{
-		n.xn = mlx_data.player.position.xcoord
-			- ((int)(mlx_data.player.position.xcoord / PIXEL_SIZE) *PIXEL_SIZE);
-		n.yn = n.xn / (float)tan(grade_to_radian(mlx_data.player.angle
-					+ angle));
-		n.x = mlx_data.player.position.xcoord - n.xn;
-		n.y = mlx_data.player.position.ycoord - n.yn;
-		n.p1 = ver_2nd_loop(mlx_data, n.x, n.y, angle);
-	}
-	return (n.p1);
-}
-
-int	check_bug_hor(t_mlx_data mlx_data, t_point point)
-{
-	if ((mlx_data.player.angle % 360) < 340
-		&& (mlx_data.player.angle % 360) > 200)
-	{
-		if (point.xcoord > mlx_data.player.position.xcoord)
-			return (1);
-		else
-			return (0);
-	}
-	return (0);
-}
-
-int	check_bug_ver(t_mlx_data mlx_data, t_point point)
-{
-	if ((mlx_data.player.angle % 360) < 250
-		&& (mlx_data.player.angle % 360) > 110)
-	{
-		if (point.ycoord > mlx_data.player.position.ycoord)
-			return (1);
-		else
-			return (0);
-	}
-	return (0);
-}
 
 t_point	check_distance(t_mlx_data mlx_data, float angle)
 {
@@ -241,7 +23,6 @@ t_point	check_distance(t_mlx_data mlx_data, float angle)
 	ver = check_vertical_steps(mlx_data, angle);
 	hor.type = 0;
 	ver.type = 1;
-
 	if (hor.xcoord < 0 || hor.ycoord < 0 || check_bug_hor(mlx_data, hor) == 1)
 		return (ver);
 	if (ver.xcoord < 0 || ver.ycoord < 0 || check_bug_ver(mlx_data, ver) == 1)
@@ -282,10 +63,9 @@ t_mlx_data	put_ray(t_mlx_data mlx_data)
 	return (mlx_data);
 }
 
-char ft_texture(t_mlx_data *mlx_data, int x, int y)
+char	ft_texture(t_mlx_data *mlx_data, int x, int y)
 {
 	(void)y;
-
 	if (mlx_data->proj_data.ray_array[x].end_point.type == 1
 		&& mlx_data->proj_data.ray_array[x].end_point.xcoord
 		> mlx_data->player.position.xcoord)
@@ -305,7 +85,7 @@ char ft_texture(t_mlx_data *mlx_data, int x, int y)
 	return ('\0');
 }
 
-int getxtex(char tex, int x, t_mlx_data mlx_data)
+int	getxtex(char tex, int x, t_mlx_data mlx_data)
 {
 	int	ret;
 
@@ -333,7 +113,7 @@ int getxtex(char tex, int x, t_mlx_data mlx_data)
 	return (ret);
 }
 
-float getstep(int height, t_mlx_data mlx_data, char tex)
+float	getstep(int height, t_mlx_data mlx_data, char tex)
 {
 	float	ret;
 
@@ -347,95 +127,4 @@ float getstep(int height, t_mlx_data mlx_data, char tex)
 	else if (tex == 'E')
 		ret = 1.0 * mlx_data.map_data.texture.ea->height / height;
 	return (ret);
-}
-
-uint32_t reversecolor(unsigned int coloraux)
-{
-	int	red;
-	int	green;
-	int	blue;
-	int	alpha;
-
-	red = coloraux >> 24;
-	green = coloraux << 8 >> 24;
-	blue = coloraux << 16 >> 24;
-	alpha = coloraux << 24 >> 24;
-	return (get_rgba(alpha, blue, green, red));
-}
-
-uint32_t gettexcolor(char tex, int x, int y, t_mlx_data mlx_data)
-{
-	uint32_t	color;
-
-	color = 0;
-	if (x + y * mlx_data.map_data.texture.no->width
-		< mlx_data.map_data.texture.no->width
-		* mlx_data.map_data.texture.no->height)
-	{
-		if (tex == 'N')
-			color = ((unsigned int *)
-					mlx_data.map_data.texture.no->pixels)[x + y
-				* mlx_data.map_data.texture.no->width];
-		else if (tex == 'S')
-			color = ((unsigned int *)
-					mlx_data.map_data.texture.so->pixels)[x + y
-				* mlx_data.map_data.texture.so->width];
-		else if (tex == 'W')
-			color = ((unsigned int *)mlx_data.map_data.texture.we->pixels)[x + y
-				* mlx_data.map_data.texture.we->width];
-		else if (tex == 'E')
-			color = ((unsigned int *)mlx_data.map_data.texture.ea->pixels)[x + y
-				* mlx_data.map_data.texture.ea->width];
-	}
-	return (reversecolor(color));
-}
-
-void	paint_square_td(t_mlx_data mlx_data, int height, int x_start, int color)
-{
-	int		y;
-	char	tex;
-	int		xtex;
-	float	step;
-
-	y = 0;
-	xtex = 0;
-	step = 0;
-	(void)color;
-	tex = ft_texture(&mlx_data, x_start, (SCREEN_HEIGH / 2) - (height / 2) + y);
-	xtex = getxtex(tex, x_start, mlx_data);
-	step = getstep(height, mlx_data, tex);
-	while (y < height && (SCREEN_HEIGH / 2) - (height / 2) + y < SCREEN_HEIGH)
-	{
-		ft_put_pixel(mlx_data.img, x_start, (SCREEN_HEIGH / 2)
-			- (height / 2) + y, gettexcolor(tex, xtex, y * step, mlx_data));
-		y++;
-	}
-
-}
-
-void ft_put_pixel(mlx_image_t *img, uint32_t x, uint32_t y, uint32_t color)
-{
-	if ((x > 0 && x < SCREEN_WIDTH) && (y > 0 && y < SCREEN_HEIGH))
-		mlx_put_pixel(img, x, y, color);
-}
-
-void	projection(t_mlx_data mlx_data)
-{
-	int		i;
-	int		color;
-	int		x_start;
-	float	ray_height;
-
-	i = 0;
-	x_start = 0;
-	while (i < mlx_data.proj_data.n_rays)
-	{
-		ray_height = SCREEN_HEIGH / (mlx_data.proj_data.ray_array[i].distance)
-			* WALL_HEIGHT_SCALE * 0.3;
-		mlx_data.proj_data.ray_array[i].ray_heigh = ray_height;
-		color = 255 - 255 * (mlx_data.proj_data.ray_array[i].distance / 1000);
-		paint_square_td(mlx_data, ray_height, x_start, color);
-		i++;
-		x_start += 1;
-	}
 }

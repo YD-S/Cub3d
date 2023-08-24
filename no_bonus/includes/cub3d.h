@@ -1,3 +1,16 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cub3d.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: delvira- <delvira-@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/08/24 19:53:59 by delvira-          #+#    #+#             */
+/*   Updated: 2023/08/24 19:54:16 by delvira-         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+
 #ifndef CUB3D_H
 # define CUB3D_H
 
@@ -6,13 +19,11 @@
 # include "math.h"
 # include "signal.h"
 
-# define SCALE 1
-
-# define PIXEL_SIZE (16 * SCALE)
+# define PIXEL_SIZE (16)
 # define SCREEN_WIDTH 1270.
 # define SCREEN_HEIGH 720.
 # define RAY_DIV (30 / SCREEN_WIDTH)
-# define WALL_HEIGHT_SCALE (25 * SCALE)
+# define WALL_HEIGHT_SCALE (25)
 
 typedef struct s_point
 {
@@ -196,4 +207,30 @@ int						condition3(t_mlx_data mlx_data, int x, int y,
 int						condition4(t_mlx_data mlx_data, int x, int y,
 							int angle);
 int						condition5(t_mlx_data mlx_data, int x, int y);
+t_norm_vars				init_norm_vars(void);
+int						radian_to_angle(float radian);
+t_point					horiz_1st_loop(t_mlx_data mlx_data, float x,
+							float y, float angle);
+t_point					horiz_2nd_loop(t_mlx_data mlx_data, float x,
+							float y, float angle);
+t_point					check_horizontal_steps(t_mlx_data mlx_data,
+							float angle);
+int						check_bug_hor(t_mlx_data mlx_data, t_point point);
+
+t_point					ver_1st_loop(t_mlx_data mlx_data, float x, float y,
+							float angle);
+t_point					ver_2nd_loop(t_mlx_data mlx_data, float x, float y,
+							float angle);
+t_point					check_vertical_steps(t_mlx_data mlx_data, float angle);
+int						check_bug_ver(t_mlx_data mlx_data, t_point point);
+void					ft_put_pixel(mlx_image_t *img, uint32_t x,
+							uint32_t y, uint32_t color);
+uint32_t				reversecolor(unsigned int coloraux);
+uint32_t				gettexcolor(char tex, int x, int y,
+							t_mlx_data mlx_data);
+void					paint_square_td(t_mlx_data mlx_data, int height,
+							int x_start, int color);
+void					projection(t_mlx_data mlx_data);
+
+
 #endif // CUB3D_H

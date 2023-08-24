@@ -4,7 +4,7 @@ CFLAGS = -Wall -Wextra -Werror -MD -g
 
 NAME = cub3d
 SRC_DIR = src
-SRC = main.c map_parse.c paint_map.c hooks.c init.c raycast.c validate.c map_utils.c parse_utils.c parse_utils2.c parse_utils3.c hooks_utils.c paint_map_utils.c paint_map_utils2.c validate_utils.c conditions.c
+SRC = main.c map_parse.c paint_map.c hooks.c init.c raycast.c validate.c map_utils.c parse_utils.c parse_utils2.c parse_utils3.c hooks_utils.c paint_map_utils.c paint_map_utils2.c validate_utils.c conditions.c raycast_utils.c check_horizontal.c check_vertical.c projection.c
 BUILD_DIR = build
 INCLUDE_DIR = includes
 INCLUDES = -I ./$(INCLUDE_DIR) -I ./$(LIB_DIR)/libft/includes -I ./$(LIB_DIR)/MLX42/include
