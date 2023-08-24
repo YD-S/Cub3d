@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: delvira- <delvira-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ysingh <ysingh@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/24 19:53:59 by delvira-          #+#    #+#             */
-/*   Updated: 2023/08/24 19:54:16 by delvira-         ###   ########.fr       */
+/*   Updated: 2023/08/24 21:50:00 by ysingh           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -231,6 +231,6 @@ uint32_t				gettexcolor(char tex, int x, int y,
 void					paint_square_td(t_mlx_data mlx_data, int height,
 							int x_start, int color);
 void					projection(t_mlx_data mlx_data);
-
+void					do_cpy(t_map **map, t_map **cpy_map, int x, int y);
 
 #endif // CUB3D_H

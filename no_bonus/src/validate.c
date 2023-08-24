@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   validate.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: delvira- <delvira-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ysingh <ysingh@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/24 19:57:58 by delvira-          #+#    #+#             */
-/*   Updated: 2023/08/24 20:00:37 by delvira-         ###   ########.fr       */
+/*   Updated: 2023/08/24 21:51:37 by ysingh           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,31 +21,23 @@ t_map	**cpy_map(t_map **map)
 	x = 0;
 	while (map[x])
 		x++;
-	cpy_map = malloc(sizeof(t_map *) * (x + 1));
-	if (!cpy_map)
-		return (NULL);
+	cpy_map = ft_calloc(sizeof(t_map *), (x + 1));
 	x = 0;
 	while (map[x])
 	{
 		y = 0;
 		while (map[x][y].value)
 			y++;
-		cpy_map[x] = malloc(sizeof(t_map) * (y + 1));
-		if (!cpy_map[x])
-			return (NULL);
+		cpy_map[x] = ft_calloc(sizeof(t_map), (y + 1));
 		y = 0;
 		while (map[x][y].value)
 		{
-			cpy_map[x][y].value = map[x][y].value;
-			cpy_map[x][y].point.xcoord = map[x][y].point.xcoord;
-			cpy_map[x][y].point.ycoord = map[x][y].point.ycoord;
-			cpy_map[x][y].point.type = map[x][y].point.type;
+			do_cpy(map, cpy_map, x, y);
 			y++;
 		}
 		cpy_map[x][y].value = '\0';
 		x++;
 	}
-	cpy_map[x] = NULL;
 	return (cpy_map);
 }
 
