@@ -6,7 +6,7 @@
 /*   By: delvira- <delvira-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/24 19:55:54 by delvira-          #+#    #+#             */
-/*   Updated: 2023/08/24 19:59:40 by delvira-         ###   ########.fr       */
+/*   Updated: 2023/08/24 20:31:40 by delvira-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,13 +38,13 @@ void	hook(struct mlx_key_data keydata, void *param)
 	mlx_data = (t_mlx_data *)param;
 	if (keydata.key == MLX_KEY_ESCAPE)
 		ft_quit(mlx_data);
-	else if (keydata.key == MLX_KEY_W)
+	else if (mlx_is_key_down(mlx_data->mlx, MLX_KEY_W))
 		ret_coord(&vel, 3, mlx_data->player.angle);
-	else if (keydata.key == MLX_KEY_S)
+	else if (mlx_is_key_down(mlx_data->mlx, MLX_KEY_S))
 		ret_coord(&vel, -3, mlx_data->player.angle);
-	else if (keydata.key == MLX_KEY_D)
+	else if (mlx_is_key_down(mlx_data->mlx, MLX_KEY_D))
 		ret_coord(&vel, -3, mlx_data->player.angle + 90);
-	else if (keydata.key == MLX_KEY_A)
+	else if (mlx_is_key_down(mlx_data->mlx, MLX_KEY_A))
 		ret_coord(&vel, 3, mlx_data->player.angle + 90);
 	if (!collision(mlx_data, mlx_data->player.position.xcoord + (vel.xcoord
 				* 2), mlx_data->player.position.ycoord + (vel.ycoord * 2)))
